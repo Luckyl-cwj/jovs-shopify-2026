@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .section-product-card {
+      font-family: Inter, sans-serif;
+      width: 851px;
+      max-width: 100%;
+      margin: 0 auto; /* Added to center the card */
+    }
+
+    .content {
+      background: #015A20;
+      color: #fff;
+      border-radius: 10px;
+      padding: 24px; /* Increased slightly for better overall spacing */
+      overflow: hidden;
+      display: flex;
+      gap: 40px;
+    }
+
+    .content .lft {
+      width: 190px;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .content .rgt {
+      padding-top: 10px; /* Reduced from 32px for better alignment */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .wrap .tit {
+      font-weight: 600;
+      font-size: 32px;
+      line-height: 1.1;
+      margin: 0;
+    }
+
+    .wrap .des-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-top: 24px;
+      gap: 20px;
+    }
+
+    .wrap .des {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 140%; /* Slightly increased for readability */
+      max-width: 64%;
+      margin: 0;
+      opacity: .8;
+    }
+
+    .wrap .btn {
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 100%;
+      padding: 12px 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 120px;
+      border-radius: 8px;
+      background: #fff;
+      color: #000;
+      text-decoration: none;
+      border: none;
+      transition: background 0.3s ease; /* Smooth hover effect */
+    }
+
+    .wrap .btn:hover {
+      background: #f0f0f0;
+    }
+
+    /* Tablet Adaptation */
+    @media(max-width: 992px) {
+      .wrap .tit {
+        font-size: 24px;
+      }
+
+      .wrap .des {
+        font-size: 15px;
+      }
+      
+      .content {
+        gap: 20px;
+      }
+    }
+
+    /* Mobile Adaptation */
+    @media(max-width: 768px) {
+      .content {
+        flex-direction: column; /* Stacks image on top of text */
+        align-items: center;
+        text-align: center; /* Centers text for better mobile aesthetics */
+        padding: 20px;
+      }
+
+      .content .lft {
+        width: 100%;
+        max-width: 150px; /* Prevents image from taking up too much vertical space */
+      }
+
+      .content .rgt {
+        padding-top: 0;
+        width: 100%;
+      }
+
+      .wrap .des-wrap {
+        flex-direction: column; /* Stacks description and button */
+        align-items: center;
+        margin-top: 16px;
+      }
+
+      .wrap .des {
+        max-width: 100%; /* Allows text to span full width */
+      }
+
+      .wrap .btn {
+        width: 100%; /* Makes the button full-width for easier tapping */
+        margin-top: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <section class="section-product-card">
+    <div class="wrap">
+      <div class="content">
+        <div class="lft">
+          <img src="./images/section-product-card-left-product.png" alt="Full-Spectrum Red Light Therapy Mat">
+        </div>
+        <div class="rgt">
+          <p class="tit">Full-Spectrum Red Light Therapy Mat</p>
+          <div class="des-wrap">
+            <p class="des">Modular Deep Red Light Repair, engineered for fuller body renewal. Modular Deep Red Light
+              Repair, engineered for fuller body renewal.
+            </p>
+            <div>
+              <a href="#" class="btn">Buy Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <img src="./images/section-product-card-bottom-img.png" alt="" style="margin-top: 16px; border-radius: 10px;">
+    </div>
+  </section>
+</body>
+
+</html>

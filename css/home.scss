@@ -1,0 +1,36 @@
+body {
+  color: #000;
+}
+#section-show-products {
+  .content {
+  }
+  .item {
+    .tit {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.21;
+      margin-bottom: 5px;
+      margin-top: 13px;
+      &:hover {
+        color: #000;
+        text-decoration: none;
+      }
+    }
+    .des {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1.21;
+      opacity: 0.4;
+      margin-bottom: 14px;
+    }
+    .price {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.21;
+      color: #d42020;
+      text-transform: uppercase;
+      del {
+      }
+    }
+  }
+}

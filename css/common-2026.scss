@@ -1,0 +1,146 @@
+:root {
+  --bs-primary-muted: #282828;
+  --bs-white-muted: rgba(255, 255, 255, 0.7);
+  --bs-white: #fff;
+  --bs-black: #000;
+  --bs-gray: #00000080;
+  --bs-gray-light: rgba(0, 0, 0, 0.3);
+  --bs-primary: #823fff;
+  --bs-secondary: #fac70b;
+  --bs-light: #f9f8ff;
+  --bs-body-font-family: "Instrument Sans", sans-serif;
+  --bs-body-font-size: 1rem;
+  --bs-body-font-weight: 400;
+  --bs-body-line-height: 1.625;
+  --bs-body-color: #080211;
+  --bs-body-bg: #fff;
+  --bs-gutter-x: 1rem;
+  --spaced-section: 8rem;
+}
+
+@media screen and (max-width: 767.98px) {
+  :root {
+    --spaced-section: 6rem;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991.98px) {
+  :root {
+    --spaced-section: 12rem;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  :root {
+    --spaced-section: 16rem;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--bs-body-font-family);
+  font-size: var(--bs-body-font-size);
+  font-weight: var(--bs-body-font-weight);
+  line-height: var(--bs-body-line-height);
+  color: var(--bs-body-color);
+  background-color: var(--bs-body-bg);
+  text-align: var(--bs-body-text-align, inherit);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+p {
+  margin: 0 0 1rem;
+}
+a {
+  color: var(--bs-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--bs-primary);
+  text-decoration: underline;
+}
+
+img,
+svg {
+  vertical-align: middle;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.container {
+  width: 100%;
+  padding-right: var(--bs-gutter-x, 1rem);
+  padding-left: var(--bs-gutter-x, 1rem);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 1224px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1240px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1326px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .container {
+    max-width: 1400px;
+  }
+}
+
+@media (min-width: 1960px) {
+  .container {
+    max-width: 1600px;
+  }
+}
+
+.gap-15 {
+  gap: 15px;
+}
+
+.d-flex {
+  display: flex;
+}
+.text-gray {
+  color: var(--bs-gray);
+}
+.text-black {
+  color: var(--bs-black);
+}
