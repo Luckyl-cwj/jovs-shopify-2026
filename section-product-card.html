@@ -12,18 +12,22 @@
     rel="stylesheet">
 </head>
 <style>
+  body {
+    margin: 0;
+  }
+
   img {
     max-width: 100%;
   }
 
-  .section-product-card {
+  #section-product-card-2026 {
     font-family: Inter;
     width: 851px;
     max-width: 100%;
 
   }
 
-  .content {
+  #section-product-card-2026 .content {
     background: #015A20;
     color: #fff;
     border-radius: 10px;
@@ -33,18 +37,18 @@
     gap: 40px;
   }
 
-  .content .lft {
+  #section-product-card-2026 .content .lft {
     width: 190px;
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
   }
 
-  .content .rgt {
+  #section-product-card-2026 .content .rgt {
     padding-top: 32px;
   }
 
-  .wrap .tit {
+  #section-product-card-2026 .wrap .tit {
     font-family: Inter;
     font-weight: 600;
     font-size: 32px;
@@ -53,14 +57,14 @@
 
   }
 
-  .wrap .des-wrap {
+  #section-product-card-2026 .wrap .des-wrap {
     display: flex;
     justify-content: space-between;
     margin-top: 24px;
     padding-right: 30px;
   }
 
-  .wrap .des {
+  #section-product-card-2026 .wrap .des {
     font-weight: 500;
     font-size: 16px;
     line-height: 120%;
@@ -69,7 +73,7 @@
     opacity: .8;
   }
 
-  .wrap .btn {
+  #section-product-card-2026 .wrap .btn {
     font-weight: 700;
     font-size: 20px;
     line-height: 100%;
@@ -85,18 +89,60 @@
     border: none;
     margin-top: 12px;
   }
-  @media(max-width:992px){
-    .wrap .tit{
-      font-size: 24px;
+
+  @media(max-width:992px) {
+    #section-product-card-2026 .content {
+      gap: 18px;
+      padding: 4px 14px 4px 4px;
     }
-    .wrap .des{
-      font-size: 16px;
+
+    #section-product-card-2026 .wrap .tit {
+      font-size: 13px;
+      line-height: 1.1;
+    }
+
+    #section-product-card-2026 .wrap .des {
+      font-size: 12px;
+      line-height: 1.1;
+      font-weight: 500;
+    }
+
+    #section-product-card-2026 .content .lft {
+      width: 124px;
+    }
+
+    #section-product-card-2026 .content .rgt {
+      padding-top: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    #section-product-card-2026 .wrap .des-wrap {
+      padding-right: 0;
+      margin-top: 8px;
+    }
+
+    #section-product-card-2026 .content .btn-wrap {
+      display: inline-flex;
+      align-items: end;
+      margin-left: 4px;
+      padding-bottom: 4px;
+    }
+
+    #section-product-card-2026 .wrap .btn {
+      margin-top: 0;
+      height: 30px;
+      padding: 0 14px;
+      font-size: 12px;
+      min-width: unset;
+
     }
   }
 </style>
 
 <body>
-  <section class="section-product-card">
+  <section id="section-product-card-2026">
     <div class="wrap">
       <div class="content">
         <div class="lft">
@@ -108,7 +154,7 @@
             <p class="des">Modular Deep Red Light Repair, engineered forfuller body renewal Modular Deep Red Light
               Repair, engineered forfuller body renewal
             </p>
-            <div>
+            <div class="btn-wrap">
               <a href="" class="btn">
                 Buy Now
               </a>
