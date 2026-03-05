@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>运营指引：blog-section-product-card 使用说明</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #667085;
+      --line: #e5e7eb;
+      --accent: #0f766e;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 16px 60px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0 0 12px;
+      line-height: 1.35;
+    }
+
+    h1 {
+      font-size: 26px;
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-top: 8px;
+    }
+
+    h3 {
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    p {
+      margin: 0 0 8px;
+    }
+
+    ol,
+    ul {
+      margin: 6px 0 10px 20px;
+      padding: 0;
+    }
+
+    code {
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      padding: 2px 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+    }
+
+    .tip {
+      border-left: 4px solid var(--accent);
+      background: #f0fdfa;
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin-top: 8px;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+
+    th,
+    td {
+      border: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      padding: 8px 10px;
+    }
+
+    th {
+      background: #f9fafb;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+    <section class="card">
+      <h1>运营指引：blog-section-product-card</h1>
+      <p>本文档用于指导运营同学在博客文章中插入并配置「产品卡片板块」。</p>
+      <p class="muted">适用模块名：<code>blog-section-product-card</code></p>
+    </section>
+
+    <section class="card">
+      <h2>一、功能说明（先看）</h2>
+      <ul>
+        <li>该板块是固定样式、可配置内容的卡片组件。</li>
+        <li>可以按文章正文中的标记位，<span style="color: rgb(192, 65, 65);">插入到指定段落位置。</span></li>
+        <li>每篇文章可配置不同标题、描述、按钮和图片。</li>
+      </ul>
+      <div class="tip">
+        重点：正文里必须写标记 <code>[blog-section-product-card]</code>，才会渲染出来。
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>二、每篇文章怎么用（运营日常操作）</h2>
+      <ol>
+        <li>进入 Shopify 后台：<code>内容 -> 博客文章</code>，打开要编辑的文章。</li>
+        <li>在正文要插入卡片的位置，单独一行写：<code>[blog-section-product-card]</code></li>
+        <li>下拉到文章底部的「元字段」区域，填写本篇文章的卡片信息。</li>
+        <li>保存文章并预览。</li>
+      </ol>
+    </section>
+
+    <section class="card">
+      <h2>三、需要填写的元字段</h2>
+      <p>后台路径：<code>设置 -> 元字段和元对象 -> 元字段 -> 博客文章</code></p>
+      <table>
+        <thead>
+          <tr>
+            <th>字段 Key</th>
+            <th>类型</th>
+            <th>说明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>custom.card_enable</code></td>
+            <td>布尔值</td>
+            <td>是否启用卡片。建议勾选/true。</td>
+          </tr>
+          <tr>
+            <td><code>custom.card_title</code></td>
+            <td>单行文本</td>
+            <td>卡片标题。</td>
+          </tr>
+          <tr>
+            <td><code>custom.card_desc</code></td>
+            <td>多行文本</td>
+            <td>卡片描述。</td>
+          </tr>
+          <tr>
+            <td><code>custom.card_button_text</code></td>
+            <td>单行文本</td>
+            <td>按钮文案，如 Buy Now。</td>
+          </tr>
+          <tr>
+            <td><code>custom.card_button_link</code></td>
+            <td>URL</td>
+            <td>按钮跳转链接。</td>
+          </tr>
+          <tr>
+            <td><code>custom.card_left_image</code></td>
+            <td>文件（图片）</td>
+            <td>卡片左侧产品图。</td>
+          </tr>
+          <tr>
+            <td><code>custom.card_bottom_image</code></td>
+            <td>文件（图片）</td>
+            <td>卡片底部横图。</td>
+          </tr>
+          <tr>
+            <td><code>custom.card_max_width</code></td>
+            <td>整数（可选）</td>
+            <td>卡片最大宽度，默认 851。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>四、常见问题</h2>
+      <h3>1）写了标记但前台没显示</h3>
+      <ul>
+        <li>检查标记是否完全一致：<code>[blog-section-product-card]</code></li>
+        <li>检查 <code>custom.card_enable</code> 是否为 true。</li>
+        <li>确认文章使用的是已接入该功能的博客模板。</li>
+      </ul>
+
+      <h3>2）显示了但图片是空的</h3>
+      <ul>
+        <li>检查该文章是否填写了 <code>custom.card_left_image</code> 和 <code>custom.card_bottom_image</code>。</li>
+      </ul>
+
+      <h3>3）一篇文章能放多个吗？</h3>
+      <ul>
+        <li>可以写多个标记，都会渲染；若要每个位置显示不同内容，需要开发再扩展。</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>五、发布前检查清单</h2>
+      <ol>
+        <li>标记位置正确（在正文希望展示的位置）。</li>
+        <li>标题、描述、按钮文案、链接已填。</li>
+        <li>两张图片都已选择。</li>
+        <li>PC 和移动端预览都正常。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+
+</html>
