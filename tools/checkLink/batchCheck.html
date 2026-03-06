@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Batch External Nofollow Checker</title>
+    <style>
+      :root {
+        --bg: #f4f6fb;
+        --panel: #ffffff;
+        --text: #111827;
+        --muted: #6b7280;
+        --line: #d1d5db;
+        --primary: #2563eb;
+        --warn: #b91c1c;
+        --ok: #166534;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 24px;
+        font-family: "Segoe UI", Arial, sans-serif;
+        color: var(--text);
+        background: var(--bg);
+      }
+
+      .wrap {
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 16px;
+        margin-bottom: 16px;
+      }
+
+      h1 {
+        margin: 0 0 12px;
+        font-size: 20px;
+      }
+
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        min-width: 150px;
+      }
+
+      .field.wide {
+        flex: 1 1 320px;
+      }
+
+      label {
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      input,
+      select,
+      button,
+      textarea {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        font-size: 14px;
+        font-family: inherit;
+      }
+
+      input,
+      select,
+      button {
+        height: 40px;
+        padding: 0 10px;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 140px;
+        padding: 10px;
+        resize: vertical;
+      }
+
+      button {
+        cursor: pointer;
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        padding: 0 16px;
+      }
+
+      button.secondary {
+        background: #64748b;
+      }
+
+      button.ghost {
+        background: #e5e7eb;
+        color: #111827;
+      }
+
+      button.warn {
+        background: #b91c1c;
+      }
+
+      button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .tips {
+        margin: 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .status {
+        margin-top: 8px;
+        font-size: 13px;
+        color: var(--muted);
+        white-space: pre-wrap;
+      }
+
+      .summary {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+        gap: 10px;
+        margin-top: 8px;
+      }
+
+      .metric {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 10px;
+      }
+
+      .metric b {
+        display: block;
+        font-size: 18px;
+        margin-top: 4px;
+      }
+
+      .mono {
+        font-family: Consolas, "Courier New", monospace;
+        word-break: break-all;
+      }
+
+      .table-wrap {
+        overflow: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+
+      th,
+      td {
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        padding: 8px;
+        vertical-align: top;
+      }
+
+      th {
+        position: sticky;
+        top: 0;
+        background: #f8fafc;
+        z-index: 1;
+      }
+
+      .ok {
+        color: var(--ok);
+        font-weight: 600;
+      }
+
+      .warn-text {
+        color: var(--warn);
+        font-weight: 700;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="card">
+        <h1>Batch External Nofollow Checker</h1>
+
+        <div class="row">
+          <div class="field wide">
+            <label for="urlListInput">URL List (one per line)</label>
+            <textarea
+              id="urlListInput"
+              placeholder="https://jovs.com/page-a&#10;https://jovs.com/page-b"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label for="fetchMode">Fetch mode</label>
+            <select id="fetchMode">
+              <option value="auto" selected>Auto (direct then proxy)</option>
+              <option value="direct">Direct only</option>
+              <option value="proxy">Proxy only</option>
+            </select>
+          </div>
+          <div class="field wide">
+            <label for="proxyTemplate">Proxy URL template</label>
+            <input
+              id="proxyTemplate"
+              type="text"
+              value="https://api.allorigins.win/raw?url={url}"
+              placeholder="Use {url} placeholder"
+            />
+          </div>
+          <div class="field">
+            <label for="concurrencyInput">Concurrency</label>
+            <input id="concurrencyInput" type="number" min="1" max="10" value="2" />
+          </div>
+          <div class="field">
+            <label for="delayInput">Delay(ms)</label>
+            <input id="delayInput" type="number" min="0" max="30000" value="300" />
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="runBtn" type="button">Run Batch Check</button>
+          <button id="stopBtn" class="warn" type="button">Stop</button>
+          <button id="exportBtn" class="secondary" type="button">Export Table (CSV)</button>
+          <button id="loadFromOutputBtn" class="secondary" type="button">Load ../output/urls.txt</button>
+          <label class="field" style="gap: 4px; margin: 0">
+            <span style="font-size: 13px; color: #6b7280">Import txt file</span>
+            <input id="fileInput" type="file" accept=".txt,.csv,text/plain" style="height: auto; padding: 7px" />
+          </label>
+          <button id="clearBtn" class="ghost" type="button">Clear Results</button>
+        </div>
+
+        <p class="tips">
+          Rule: only keep pages that contain external links (not relative, not jovs domain) and those links are
+          missing <span class="mono">nofollow</span>.
+        </p>
+        <div id="status" class="status"></div>
+      </div>
+
+      <div class="card">
+        <h1>Summary</h1>
+        <div id="summary" class="summary"></div>
+      </div>
+
+      <div class="card">
+        <h1>Affected Page URLs</h1>
+        <textarea
+          id="affectedUrlsOutput"
+          class="mono"
+          readonly
+          placeholder="Pages that contain external links missing nofollow..."
+        ></textarea>
+      </div>
+
+      <div class="card">
+        <h1>Missing Nofollow Details</h1>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Source Page</th>
+                <th>Href</th>
+                <th>Resolved URL</th>
+                <th>Rel</th>
+                <th>Anchor Text</th>
+                <th>A Tag HTML</th>
+              </tr>
+            </thead>
+            <tbody id="resultBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const JOVS_MAIN_DOMAIN = "jovs.com";
+
+      const urlListInput = document.getElementById("urlListInput");
+      const fetchModeSelect = document.getElementById("fetchMode");
+      const proxyTemplateInput = document.getElementById("proxyTemplate");
+      const concurrencyInput = document.getElementById("concurrencyInput");
+      const delayInput = document.getElementById("delayInput");
+      const runBtn = document.getElementById("runBtn");
+      const stopBtn = document.getElementById("stopBtn");
+      const exportBtn = document.getElementById("exportBtn");
+      const loadFromOutputBtn = document.getElementById("loadFromOutputBtn");
+      const fileInput = document.getElementById("fileInput");
+      const clearBtn = document.getElementById("clearBtn");
+      const statusEl = document.getElementById("status");
+      const summaryEl = document.getElementById("summary");
+      const affectedUrlsOutput = document.getElementById("affectedUrlsOutput");
+      const resultBody = document.getElementById("resultBody");
+
+      const state = {
+        running: false,
+        stopRequested: false,
+        lastProblemRows: [],
+      };
+
+      function setStatus(message) {
+        statusEl.textContent = message || "";
+      }
+
+      function sleep(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+
+      function hasScheme(value) {
+        return /^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(value);
+      }
+
+      function isRelativeHref(rawHref) {
+        if (!rawHref) {
+          return false;
+        }
+        if (rawHref.startsWith("//")) {
+          return false;
+        }
+        return !hasScheme(rawHref);
+      }
+
+      function isHttpLike(urlObj) {
+        return urlObj.protocol === "http:" || urlObj.protocol === "https:";
+      }
+
+      function isJovsDomain(hostname) {
+        const host = (hostname || "").toLowerCase();
+        return host === JOVS_MAIN_DOMAIN || host.endsWith(`.${JOVS_MAIN_DOMAIN}`);
+      }
+
+      function hasNofollow(relValue) {
+        const tokens = (relValue || "")
+          .toLowerCase()
+          .split(/\s+/)
+          .map((part) => part.trim())
+          .filter(Boolean);
+        return tokens.includes("nofollow");
+      }
+
+      function classifyLink(rawHref, baseUrl) {
+        const href = (rawHref || "").trim();
+        if (!href) {
+          return { type: "empty", resolvedUrl: "" };
+        }
+
+        let resolved = "";
+        try {
+          resolved = new URL(href, baseUrl).toString();
+        } catch {
+          return { type: "invalid", resolvedUrl: "" };
+        }
+
+        if (isRelativeHref(href)) {
+          return { type: "relative", resolvedUrl: resolved };
+        }
+
+        const finalUrl = new URL(resolved);
+        if (!isHttpLike(finalUrl)) {
+          return { type: "other", resolvedUrl: resolved };
+        }
+
+        if (isJovsDomain(finalUrl.hostname)) {
+          return { type: "jovs", resolvedUrl: resolved };
+        }
+
+        return { type: "external", resolvedUrl: resolved };
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;");
+      }
+
+      function createProxyUrl(template, targetUrl) {
+        const encoded = encodeURIComponent(targetUrl);
+        if (template.includes("{url}")) {
+          return template.replaceAll("{url}", encoded);
+        }
+        return `${template}${template.includes("?") ? "&" : "?"}url=${encoded}`;
+      }
+
+      async function fetchHtml(targetUrl, mode, proxyTemplate) {
+        const attempts = [];
+        if (mode === "direct" || mode === "auto") {
+          attempts.push({ type: "direct", url: targetUrl });
+        }
+        if (mode === "proxy" || mode === "auto") {
+          attempts.push({
+            type: "proxy",
+            url: createProxyUrl(proxyTemplate, targetUrl),
+          });
+        }
+
+        let lastError = null;
+        for (const attempt of attempts) {
+          try {
+            const res = await fetch(attempt.url, {
+              method: "GET",
+              headers: {
+                Accept: "text/html,application/xhtml+xml;q=0.9,*/*;q=0.8",
+              },
+            });
+            if (!res.ok) {
+              throw new Error(`${attempt.type} request failed: ${res.status}`);
+            }
+            const html = await res.text();
+            return { html, source: attempt.type };
+          } catch (error) {
+            lastError = error;
+          }
+        }
+
+        throw lastError || new Error("Failed to fetch HTML.");
+      }
+
+      function parseUrlList(text) {
+        const items = text
+          .split(/\r?\n/)
+          .map((line) => line.trim())
+          .filter((line) => line && !line.startsWith("#"));
+
+        const dedup = [];
+        const seen = new Set();
+        for (const item of items) {
+          try {
+            const normalized = new URL(item).toString();
+            if (!seen.has(normalized)) {
+              seen.add(normalized);
+              dedup.push(normalized);
+            }
+          } catch {
+            // ignore invalid line
+          }
+        }
+
+        return dedup;
+      }
+
+      function renderSummary(summary) {
+        const items = [
+          ["Input URLs", summary.totalInput],
+          ["Checked URLs", summary.checked],
+          ["Failed URLs", summary.failed],
+          ["Affected Pages", summary.affectedPages],
+          ["Problematic A Tags", summary.problemTagCount],
+        ];
+
+        summaryEl.innerHTML = items
+          .map(
+            ([label, value]) =>
+              `<div class="metric"><div>${escapeHtml(label)}</div><b>${escapeHtml(value)}</b></div>`
+          )
+          .join("");
+      }
+
+      function renderAffectedUrls(pageUrls) {
+        affectedUrlsOutput.value = pageUrls.join("\n");
+      }
+
+      function renderRows(rows) {
+        if (rows.length === 0) {
+          resultBody.innerHTML =
+            '<tr><td colspan="7" class="ok">No external links missing nofollow were found.</td></tr>';
+          return;
+        }
+
+        resultBody.innerHTML = rows
+          .map((row, index) => {
+            return `
+              <tr>
+                <td>${index + 1}</td>
+                <td class="mono">${escapeHtml(row.pageUrl)}</td>
+                <td class="mono">${escapeHtml(row.href)}</td>
+                <td class="mono">${escapeHtml(row.resolvedUrl)}</td>
+                <td class="mono">${escapeHtml(row.rel)}</td>
+                <td>${escapeHtml(row.text)}</td>
+                <td class="mono">${escapeHtml(row.outerHtml)}</td>
+              </tr>
+            `;
+          })
+          .join("");
+      }
+
+      function toCsvCell(value) {
+        const text = String(value ?? "").replaceAll('"', '""');
+        return `"${text}"`;
+      }
+
+      function buildCsv(rows) {
+        const headers = [
+          "Source Page",
+          "Href",
+          "Resolved URL",
+          "Rel",
+          "Anchor Text",
+          "A Tag HTML",
+        ];
+        const lines = [headers.map(toCsvCell).join(",")];
+
+        for (const row of rows) {
+          lines.push(
+            [
+              row.pageUrl,
+              row.href,
+              row.resolvedUrl,
+              row.rel,
+              row.text,
+              row.outerHtml,
+            ]
+              .map(toCsvCell)
+              .join(",")
+          );
+        }
+
+        return "\uFEFF" + lines.join("\r\n");
+      }
+
+      function exportTableCsv() {
+        if (state.lastProblemRows.length === 0) {
+          setStatus("No rows to export.");
+          return;
+        }
+
+        const csv = buildCsv(state.lastProblemRows);
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const now = new Date();
+        const stamp = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, "0")}${String(
+          now.getDate()
+        ).padStart(2, "0")}_${String(now.getHours()).padStart(2, "0")}${String(now.getMinutes()).padStart(
+          2,
+          "0"
+        )}${String(now.getSeconds()).padStart(2, "0")}`;
+        const fileName = `missing-nofollow-${stamp}.csv`;
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = fileName;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        setStatus(`Exported ${state.lastProblemRows.length} rows to ${fileName}`);
+      }
+
+      async function analyzeOnePage(pageUrl, fetchMode, proxyTemplate) {
+        const { html, source } = await fetchHtml(pageUrl, fetchMode, proxyTemplate);
+        const doc = new DOMParser().parseFromString(html, "text/html");
+        const links = [...doc.querySelectorAll("a")];
+        const missingRows = [];
+
+        for (const a of links) {
+          const href = (a.getAttribute("href") || "").trim();
+          const rel = (a.getAttribute("rel") || "").trim();
+          const text = (a.textContent || "").trim().replace(/\s+/g, " ").slice(0, 220);
+          const outerHtml = (a.outerHTML || "").trim().replace(/\s+/g, " ").slice(0, 500);
+          const { type, resolvedUrl } = classifyLink(href, pageUrl);
+
+          if (type === "external" && !hasNofollow(rel)) {
+            missingRows.push({
+              pageUrl,
+              href,
+              rel,
+              text,
+              outerHtml,
+              resolvedUrl,
+            });
+          }
+        }
+
+        return {
+          source,
+          totalLinks: links.length,
+          missingRows,
+        };
+      }
+
+      async function runBatchCheck() {
+        if (state.running) {
+          setStatus("Batch check is already running.");
+          return;
+        }
+
+        const urls = parseUrlList(urlListInput.value);
+        if (urls.length === 0) {
+          setStatus("No valid URLs found. Paste URLs first.");
+          return;
+        }
+
+        const fetchMode = fetchModeSelect.value;
+        const proxyTemplate = proxyTemplateInput.value.trim();
+        const concurrency = Math.max(1, Math.min(10, Number.parseInt(concurrencyInput.value || "1", 10) || 1));
+        const delayMs = Math.max(0, Number.parseInt(delayInput.value || "0", 10) || 0);
+
+        state.running = true;
+        state.stopRequested = false;
+
+        runBtn.disabled = true;
+        stopBtn.disabled = false;
+
+        const summary = {
+          totalInput: urls.length,
+          checked: 0,
+          failed: 0,
+          affectedPages: 0,
+          problemTagCount: 0,
+        };
+
+        const affectedPageSet = new Set();
+        const allProblemRows = [];
+
+        renderSummary(summary);
+        renderAffectedUrls([]);
+        resultBody.innerHTML = "";
+        state.lastProblemRows = [];
+        exportBtn.disabled = true;
+        setStatus(`Starting batch check. Total URLs: ${urls.length}`);
+
+        let cursor = 0;
+
+        const worker = async () => {
+          while (true) {
+            if (state.stopRequested) {
+              return;
+            }
+
+            const index = cursor;
+            cursor += 1;
+            if (index >= urls.length) {
+              return;
+            }
+
+            const pageUrl = urls[index];
+            try {
+              const data = await analyzeOnePage(pageUrl, fetchMode, proxyTemplate);
+              summary.checked += 1;
+
+              if (data.missingRows.length > 0) {
+                affectedPageSet.add(pageUrl);
+                summary.problemTagCount += data.missingRows.length;
+                allProblemRows.push(...data.missingRows);
+              }
+            } catch (error) {
+              summary.checked += 1;
+              summary.failed += 1;
+            }
+
+            summary.affectedPages = affectedPageSet.size;
+            renderSummary(summary);
+            renderAffectedUrls([...affectedPageSet].sort((a, b) => a.localeCompare(b)));
+            renderRows(allProblemRows);
+            state.lastProblemRows = allProblemRows.slice();
+            exportBtn.disabled = state.lastProblemRows.length === 0;
+            setStatus(`Progress: ${summary.checked}/${summary.totalInput}`);
+
+            if (delayMs > 0) {
+              await sleep(delayMs);
+            }
+          }
+        };
+
+        try {
+          const workers = Array.from({ length: concurrency }, () => worker());
+          await Promise.all(workers);
+          if (state.stopRequested) {
+            setStatus(
+              `Stopped. Checked: ${summary.checked}/${summary.totalInput}. Affected pages: ${summary.affectedPages}`
+            );
+          } else {
+            const endText =
+              summary.problemTagCount > 0
+                ? `Done. Found ${summary.problemTagCount} problematic tags across ${summary.affectedPages} pages.`
+                : "Done. No external links missing nofollow.";
+            setStatus(endText);
+          }
+        } finally {
+          state.running = false;
+          runBtn.disabled = false;
+          stopBtn.disabled = true;
+        }
+      }
+
+      async function loadUrlsFromOutputFile() {
+        try {
+          const res = await fetch("../output/urls.txt");
+          if (!res.ok) {
+            throw new Error(`HTTP ${res.status}`);
+          }
+          const text = await res.text();
+          urlListInput.value = text.trim();
+          setStatus("Loaded URLs from ../output/urls.txt");
+        } catch (error) {
+          setStatus("Unable to load ../output/urls.txt automatically. Paste content manually or import file.");
+        }
+      }
+
+      async function importLocalFile(file) {
+        const text = await file.text();
+        urlListInput.value = text.trim();
+        setStatus(`Imported ${file.name}`);
+      }
+
+      function clearResults() {
+        summaryEl.innerHTML = "";
+        affectedUrlsOutput.value = "";
+        resultBody.innerHTML = "";
+        state.lastProblemRows = [];
+        exportBtn.disabled = true;
+        setStatus("");
+      }
+
+      runBtn.addEventListener("click", runBatchCheck);
+      stopBtn.addEventListener("click", () => {
+        if (state.running) {
+          state.stopRequested = true;
+          setStatus("Stopping after current requests complete...");
+        }
+      });
+      loadFromOutputBtn.addEventListener("click", loadUrlsFromOutputFile);
+      exportBtn.addEventListener("click", exportTableCsv);
+      clearBtn.addEventListener("click", clearResults);
+      fileInput.addEventListener("change", async (event) => {
+        const file = event.target.files && event.target.files[0];
+        if (!file) {
+          return;
+        }
+        try {
+          await importLocalFile(file);
+        } catch {
+          setStatus("Failed to read local file.");
+        }
+      });
+
+      stopBtn.disabled = true;
+      exportBtn.disabled = true;
+    </script>
+  </body>
+</html>
