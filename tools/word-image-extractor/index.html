@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Word 图片提取工具</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="hero">
+        <h1>Word 图片提取工具</h1>
+        <p>上传 `.docx` 文件，提取所有内嵌图片，支持预览与一键打包下载。</p>
+      </header>
+
+      <section class="controls" aria-label="上传与操作">
+        <label class="file-picker" for="docxFile">
+          <span>选择 Word 文件</span>
+          <input id="docxFile" type="file" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+        </label>
+        <button id="extractBtn" type="button" disabled>提取图片</button>
+        <button id="downloadZipBtn" type="button" disabled>一键打包下载</button>
+      </section>
+
+      <section class="meta">
+        <p id="statusText">请先选择一个 `.docx` 文件。</p>
+        <p id="countText"></p>
+      </section>
+
+      <section id="gallery" class="gallery" aria-live="polite"></section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
