@@ -26,4 +26,105 @@ body {
   line-height: 1.21;
   color: #d42020;
   text-transform: uppercase;
+}
+#section-show-products .item .price del {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.21;
+  color: #b2b2b2;
+  text-transform: uppercase;
+}
+#section-show-products .item .default-img {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+#section-show-products .item .hover-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  transform: scale(1);
+}
+#section-show-products .item .img-wrap {
+  overflow: hidden;
+  border-radius: 10px;
+}
+#section-show-products .item .content-item {
+  padding: 8px;
+}
+#section-show-products .item .img-wrap:hover .default-img {
+  opacity: 0;
+}
+#section-show-products .item .img-wrap:hover .hover-img {
+  opacity: 1;
+  transform: scale(1.08);
+}
+
+#section-technology-cards .item {
+  border-radius: 10px;
+  overflow: hidden;
+}
+#section-technology-cards .img-wrap .img-text-wrap {
+  position: absolute;
+  padding: 6% 8%;
+  bottom: 0;
+  left: 0;
+}
+#section-technology-cards .img-wrap .img-text-wrap .tit {
+  font-size: 28px;
+  margin: 20px 0 10px;
+}
+#section-technology-cards .img-wrap .img-text-wrap .sec-tit {
+  font-size: 16px;
+  color: #b2b2b2;
+  margin: 0;
+}
+#section-technology-cards .img-wrap::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+#section-technology-cards .text-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 6.8%;
+  background-color: #f6f3ed;
+  padding: 6.8% 8%;
+  border-radius: 0.7rem;
+}
+#section-technology-cards .text-wrap .des {
+  flex: 1;
+  font-size: 16px;
+  font-weight: bold;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(178, 178, 178, 0.3);
+  margin-bottom: 0;
+}
+#section-technology-cards .text-wrap .btn {
+  cursor: pointer;
+  display: inline-block;
+  padding: 2.3% 6.8%;
+  background-color: #000;
+  color: #fff;
+  border-radius: 0.5rem;
+  font-size: 14px;
+}
+#section-technology-cards .text-wrap .btn:hover {
+  text-decoration: none;
 }/*# sourceMappingURL=home.css.map */

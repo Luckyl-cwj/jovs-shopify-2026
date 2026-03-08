@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Link Nofollow Checker</title>
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --panel: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --line: #d1d5db;
+      --primary: #2563eb;
+      --warn: #b91c1c;
+      --ok: #166534;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 20px;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field.url {
+      flex: 1 1 560px;
+    }
+
+    .field.proxy {
+      flex: 1 1 420px;
+    }
+
+    label {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    input,
+    select,
+    button {
+      height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 10px;
+      font-size: 14px;
+    }
+
+    button {
+      cursor: pointer;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 0 16px;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .tips {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .status {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--muted);
+      white-space: pre-wrap;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .metric b {
+      display: block;
+      font-size: 18px;
+      margin-top: 4px;
+    }
+
+    .table-wrap {
+      overflow: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      padding: 8px;
+      vertical-align: top;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      background: #f8fafc;
+      z-index: 1;
+    }
+
+    .badge {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .badge.relative,
+    .badge.jovs {
+      background: #dcfce7;
+      color: #14532d;
+    }
+
+    .badge.external {
+      background: #fee2e2;
+      color: #7f1d1d;
+    }
+
+    .ok {
+      color: var(--ok);
+      font-weight: 600;
+    }
+
+    .warn {
+      color: var(--warn);
+      font-weight: 700;
+    }
+
+    .mono {
+      font-family: Consolas, "Courier New", monospace;
+      word-break: break-all;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Link Nofollow Checker</h1>
+      <p class="tips">
+        Need batch mode? Open <a href="./batchCheck.html">batchCheck.html</a>
+      </p>
+      <div class="row">
+        <div class="field url">
+          <label for="targetUrl">Page URL</label>
+          <input id="targetUrl" type="url" placeholder="https://tenorshare.com/pages/example" />
+        </div>
+        <div class="field">
+          <label for="fetchMode">Fetch mode</label>
+          <select id="fetchMode">
+            <option value="auto" selected>Auto (direct then proxy)</option>
+            <option value="direct">Direct only</option>
+            <option value="proxy">Proxy only</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>&nbsp;</label>
+          <button id="runBtn" type="button">Analyze</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field proxy">
+          <label for="proxyTemplate">Proxy URL template</label>
+          <input id="proxyTemplate" type="text" value="https://api.allorigins.win/raw?url={url}"
+            placeholder="Use {url} placeholder" />
+        </div>
+      </div>
+
+      <p class="tips">
+        Rule: if link is NOT relative and NOT on tenorshare.com domain, it is marked as external and must include
+        <span class="mono">nofollow</span> in rel.
+      </p>
+      <div id="status" class="status"></div>
+    </div>
+
+    <div class="card">
+      <h1>Summary</h1>
+      <div id="summary" class="summary"></div>
+    </div>
+
+    <div class="card">
+      <h1>Links</h1>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Type</th>
+              <th>Nofollow</th>
+              <th>Href</th>
+              <th>Resolved URL</th>
+              <th>Rel</th>
+              <th>Anchor Text</th>
+            </tr>
+          </thead>
+          <tbody id="resultBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const targetUrlInput = document.getElementById("targetUrl");
+    const fetchModeSelect = document.getElementById("fetchMode");
+    const proxyTemplateInput = document.getElementById("proxyTemplate");
+    const runBtn = document.getElementById("runBtn");
+    const statusEl = document.getElementById("status");
+    const summaryEl = document.getElementById("summary");
+    const resultBody = document.getElementById("resultBody");
+
+    function setStatus(message) {
+      statusEl.textContent = message || "";
+    }
+
+    function isHttpLike(urlObj) {
+      return urlObj.protocol === "http:" || urlObj.protocol === "https:";
+    }
+
+    function hasScheme(value) {
+      return /^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(value);
+    }
+
+    function isRelativeHref(rawHref) {
+      if (!rawHref) {
+        return false;
+      }
+      if (rawHref.startsWith("//")) {
+        return false;
+      }
+      return !hasScheme(rawHref);
+    }
+
+    function isJovsDomain(hostname) {
+      const host = (hostname || "").toLowerCase();
+      return host === "tenorshare.com" || host.endsWith(".tenorshare.com");
+    }
+
+    function hasNofollow(relValue) {
+      const tokens = (relValue || "")
+        .toLowerCase()
+        .split(/\s+/)
+        .map((part) => part.trim())
+        .filter(Boolean);
+      return tokens.includes("nofollow");
+    }
+
+    function classifyLink(rawHref, baseUrl) {
+      const href = (rawHref || "").trim();
+      if (!href) {
+        return { type: "empty", resolvedUrl: "" };
+      }
+
+      let resolved = "";
+      try {
+        resolved = new URL(href, baseUrl).toString();
+      } catch {
+        return { type: "invalid", resolvedUrl: "" };
+      }
+
+      if (isRelativeHref(href)) {
+        return { type: "relative", resolvedUrl: resolved };
+      }
+
+      const finalUrl = new URL(resolved);
+      if (!isHttpLike(finalUrl)) {
+        return { type: "other", resolvedUrl: resolved };
+      }
+
+      if (isJovsDomain(finalUrl.hostname)) {
+        return { type: "jovs", resolvedUrl: resolved };
+      }
+
+      return { type: "external", resolvedUrl: resolved };
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function createProxyUrl(template, targetUrl) {
+      const encoded = encodeURIComponent(targetUrl);
+      if (template.includes("{url}")) {
+        return template.replaceAll("{url}", encoded);
+      }
+      return `${template}${template.includes("?") ? "&" : "?"}url=${encoded}`;
+    }
+
+    async function fetchHtml(targetUrl, mode, proxyTemplate) {
+      const attempts = [];
+      if (mode === "direct" || mode === "auto") {
+        attempts.push({ type: "direct", url: targetUrl });
+      }
+      if (mode === "proxy" || mode === "auto") {
+        attempts.push({
+          type: "proxy",
+          url: createProxyUrl(proxyTemplate, targetUrl),
+        });
+      }
+
+      let lastError = null;
+      for (const attempt of attempts) {
+        try {
+          const res = await fetch(attempt.url, {
+            method: "GET",
+            headers: {
+              Accept: "text/html,application/xhtml+xml;q=0.9,*/*;q=0.8",
+            },
+          });
+          if (!res.ok) {
+            throw new Error(`${attempt.type} request failed: ${res.status}`);
+          }
+          const html = await res.text();
+          return { html, source: attempt.type };
+        } catch (error) {
+          lastError = error;
+        }
+      }
+
+      throw lastError || new Error("Failed to fetch HTML.");
+    }
+
+    function renderSummary(stats) {
+      const items = [
+        ["Total a tags", stats.total],
+        ["Relative", stats.relative],
+        ["Jovs domain", stats.jovs],
+        ["External", stats.external],
+        ["External with nofollow", stats.externalWithNofollow],
+        ["External missing nofollow", stats.externalMissingNofollow],
+      ];
+
+      summaryEl.innerHTML = items
+        .map(
+          ([label, value]) =>
+            `<div class="metric"><div>${escapeHtml(label)}</div><b>${escapeHtml(value)}</b></div>`
+        )
+        .join("");
+    }
+
+    function renderRows(rows) {
+      resultBody.innerHTML = rows
+        .map((row, index) => {
+          const typeClass = row.type === "external" ? "external" : row.type === "jovs" ? "jovs" : "relative";
+          const nofollowCell = row.type === "external"
+            ? row.hasNofollow
+              ? '<span class="ok">YES</span>'
+              : '<span class="warn">NO</span>'
+            : '<span class="mono">N/A</span>';
+
+          return `
+              <tr>
+                <td>${index + 1}</td>
+                <td><span class="badge ${typeClass}">${escapeHtml(row.type)}</span></td>
+                <td>${nofollowCell}</td>
+                <td class="mono">${escapeHtml(row.href)}</td>
+                <td class="mono">${escapeHtml(row.resolvedUrl)}</td>
+                <td class="mono">${escapeHtml(row.rel)}</td>
+                <td>${escapeHtml(row.text)}</td>
+              </tr>
+            `;
+        })
+        .join("");
+    }
+
+    async function runCheck() {
+      const targetUrl = targetUrlInput.value.trim();
+      const fetchMode = fetchModeSelect.value;
+      const proxyTemplate = proxyTemplateInput.value.trim();
+
+      if (!targetUrl) {
+        setStatus("Please enter a URL.");
+        return;
+      }
+
+      let baseUrl;
+      try {
+        baseUrl = new URL(targetUrl).toString();
+      } catch {
+        setStatus("Invalid URL.");
+        return;
+      }
+
+      runBtn.disabled = true;
+      setStatus("Fetching HTML...");
+      summaryEl.innerHTML = "";
+      resultBody.innerHTML = "";
+
+      try {
+        const { html, source } = await fetchHtml(baseUrl, fetchMode, proxyTemplate);
+        setStatus(`Fetched source by: ${source}. Parsing links...`);
+
+        const doc = new DOMParser().parseFromString(html, "text/html");
+        const links = [...doc.querySelectorAll("a")];
+        const rows = links.map((a) => {
+          const href = (a.getAttribute("href") || "").trim();
+          const rel = (a.getAttribute("rel") || "").trim();
+          const text = (a.textContent || "").trim().replace(/\s+/g, " ").slice(0, 180);
+          const { type, resolvedUrl } = classifyLink(href, baseUrl);
+          const follow = hasNofollow(rel);
+          return {
+            href,
+            rel,
+            text,
+            type,
+            resolvedUrl,
+            hasNofollow: follow,
+          };
+        });
+
+        const stats = {
+          total: rows.length,
+          relative: rows.filter((row) => row.type === "relative").length,
+          jovs: rows.filter((row) => row.type === "jovs").length,
+          external: rows.filter((row) => row.type === "external").length,
+          externalWithNofollow: rows.filter((row) => row.type === "external" && row.hasNofollow).length,
+          externalMissingNofollow: rows.filter((row) => row.type === "external" && !row.hasNofollow).length,
+        };
+
+        renderSummary(stats);
+        renderRows(rows);
+
+        const warnText =
+          stats.externalMissingNofollow > 0
+            ? ` Found ${stats.externalMissingNofollow} external links missing nofollow.`
+            : " All external links contain nofollow.";
+        setStatus(`Done. Total links: ${stats.total}.${warnText}`);
+      } catch (error) {
+        setStatus(`Error: ${error.message}`);
+      } finally {
+        runBtn.disabled = false;
+      }
+    }
+
+    runBtn.addEventListener("click", runCheck);
+    targetUrlInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        runCheck();
+      }
+    });
+  </script>
+</body>
+
+</html>

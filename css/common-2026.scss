@@ -88,6 +88,9 @@ img {
   margin-right: auto;
   margin-left: auto;
 }
+.position-relative{
+  position: relative;
+}
 
 @media (min-width: 576px) {
   .container {
@@ -134,6 +137,12 @@ img {
 .gap-15 {
   gap: 15px;
 }
+.gap-24{
+  gap: 24px;
+}
+.gap-2-5rem{
+  gap: 2.5rem;
+}
 
 .d-flex {
   display: flex;
@@ -143,4 +152,7 @@ img {
 }
 .text-black {
   color: var(--bs-black);
+}
+.text-white{
+  color: var(--bs-white);
 }

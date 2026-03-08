@@ -1,0 +1,213 @@
+{% liquid
+  assign dom_id = dom_id | default: 'blog-section-product-card'
+  assign spc_section_max_width = section_max_width | default: 850
+  assign spc_card_bg = card_bg | default: '#015A20'
+  assign spc_card_text = card_text | default: '#FFFFFF'
+  assign spc_desc_text = desc_text | default: '#FFFFFF'
+  assign spc_btn_bg = btn_bg | default: '#FFFFFF'
+  assign spc_btn_text_color = btn_text_color | default: '#000000'
+  assign spc_title = title | default: 'Full-Spectrum Red Light Therapy Mat'
+  assign spc_description = description | default: 'Modular Deep Red Light Repair, engineered for fuller body renewal.'
+  assign spc_button_text = button_text | default: 'Buy Now'
+  assign spc_button_link = button_link | default: '/products/infrared-light-therapy-mat'
+  assign spc_left_image_alt = left_image_alt | default: spc_title
+  assign spc_bottom_image_alt = bottom_image_alt | default: spc_title
+  assign spc_left_image_width = left_image_width | default: 800
+  assign spc_left_image_height = left_image_height | default: 800
+  assign spc_bottom_image_width = bottom_image_width | default: 1800
+  assign spc_bottom_image_height = bottom_image_height | default: 600
+  assign spc_left_asset = left_asset | default: blank
+  assign spc_bottom_asset = bottom_asset | default: blank
+%}
+
+{% style %}
+  #{{ dom_id }} {
+    --spc-card-bg: {{ spc_card_bg }};
+    --spc-card-text: {{ spc_card_text }};
+    --spc-desc-text: {{ spc_desc_text }};
+    --spc-btn-bg: {{ spc_btn_bg }};
+    --spc-btn-text: {{ spc_btn_text_color }};
+    font-family: Inter;
+    width: {{ spc_section_max_width }}px;
+    max-width: 100%;
+  }
+
+  #{{ dom_id }} img {
+    max-width: 100%;
+  }
+
+  #{{ dom_id }} .spc-wrap {
+    width: 100%;
+  }
+
+  #{{ dom_id }} .spc-content {
+    background: var(--spc-card-bg);
+    color: var(--spc-card-text);
+    border-radius: 10px;
+    padding: 10px;
+    overflow: hidden;
+    display: flex;
+    gap: 40px;
+  }
+
+  #{{ dom_id }} .spc-lft {
+    width: 190px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  #{{ dom_id }} .spc-rgt {
+    padding-top: 32px;
+  }
+
+  #{{ dom_id }} .spc-tit {
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 1.1;
+    margin: 0;
+    color: var(--spc-card-text);
+  }
+
+  #{{ dom_id }} .spc-des-wrap {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 24px;
+    padding-right: 30px;
+  }
+
+  #{{ dom_id }} .spc-des {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 120%;
+    max-width: 64%;
+    margin: 0;
+    opacity: 0.8;
+    color: var(--spc-desc-text);
+  }
+
+  #{{ dom_id }} .spc-btn {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 100%;
+    padding: 12px 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px;
+    border-radius: 8px;
+    background: var(--spc-btn-bg);
+    color: var(--spc-btn-text);
+    text-decoration: none;
+    border: none;
+    margin-top: 12px;
+  }
+
+  #{{ dom_id }} .spc-bottom {
+    margin-top: 0;
+  }
+
+  @media (max-width: 992px) {
+    #{{ dom_id }} {
+      width: unset;
+    }
+
+    #{{ dom_id }} .spc-content {
+      gap: 18px;
+      padding: 4px 14px 4px 4px;
+    }
+
+    #{{ dom_id }} .spc-tit {
+      font-size: 13px;
+      line-height: 1.1;
+    }
+
+    #{{ dom_id }} .spc-des {
+      font-size: 12px;
+      line-height: 1.1;
+      font-weight: 500;
+      max-width: 100%;
+    }
+
+    #{{ dom_id }} .spc-lft {
+      width: 86px;
+    }
+
+    #{{ dom_id }} .spc-rgt {
+      padding-top: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    #{{ dom_id }} .spc-des-wrap {
+      padding-right: 0;
+      margin-top: 8px;
+      flex-direction: column;
+    }
+
+    #{{ dom_id }} .spc-btn-wrap {
+      display: inline-flex;
+      align-items: end;
+      margin-left: 4px;
+      padding-bottom: 4px;
+      margin: 12px 0 0;
+    }
+
+    #{{ dom_id }} .spc-btn {
+      margin-top: 0;
+      height: 30px;
+      padding: 0 14px;
+      font-size: 12px;
+      min-width: unset;
+    }
+  }
+{% endstyle %}
+
+<section id="{{ dom_id }}">
+  <div class="spc-wrap">
+    <div class="spc-content">
+      <div class="spc-lft">
+        {% if left_image != blank %}
+          {% assign resolved_left_alt = left_image.alt | default: spc_left_image_alt %}
+          {{ left_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: resolved_left_alt }}
+        {% elsif spc_left_asset != blank %}
+          <img
+            src="{{ spc_left_asset | asset_url }}"
+            alt="{{ spc_left_image_alt | escape }}"
+            loading="lazy"
+            width="{{ spc_left_image_width }}"
+            height="{{ spc_left_image_height }}"
+          >
+        {% endif %}
+      </div>
+      <div class="spc-rgt">
+        <p class="spc-tit">{{ spc_title | escape }}</p>
+        <div class="spc-des-wrap">
+          <p class="spc-des">{{ spc_description | escape | newline_to_br }}</p>
+          {% if spc_button_text != blank %}
+            <div class="spc-btn-wrap">
+              <a href="{{ spc_button_link }}" class="spc-btn">{{ spc_button_text | escape }}</a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% if bottom_image != blank %}
+      {% assign resolved_bottom_alt = bottom_image.alt | default: spc_bottom_image_alt %}
+      <div class="spc-bottom">
+        {{ bottom_image | image_url: width: 1800 | image_tag: loading: 'lazy', alt: resolved_bottom_alt }}
+      </div>
+    {% elsif spc_bottom_asset != blank %}
+      <div class="spc-bottom">
+        <img
+          src="{{ spc_bottom_asset | asset_url }}"
+          alt="{{ spc_bottom_image_alt | escape }}"
+          loading="lazy"
+          width="{{ spc_bottom_image_width }}"
+          height="{{ spc_bottom_image_height }}"
+        >
+      </div>
+    {% endif %}
+  </div>
+</section>

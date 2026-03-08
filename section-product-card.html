@@ -20,14 +20,14 @@
     max-width: 100%;
   }
 
-  #section-product-card-2026 {
+  #blog-section-product-card-2026 {
     font-family: Inter;
-    width: 851px;
+    width: 850px;
     max-width: 100%;
 
   }
 
-  #section-product-card-2026 .content {
+  #blog-section-product-card-2026 .content {
     background: #015A20;
     color: #fff;
     border-radius: 10px;
@@ -37,43 +37,44 @@
     gap: 40px;
   }
 
-  #section-product-card-2026 .content .lft {
+  #blog-section-product-card-2026 .content .lft {
     width: 190px;
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
   }
 
-  #section-product-card-2026 .content .rgt {
+  #blog-section-product-card-2026 .content .rgt {
     padding-top: 32px;
   }
 
-  #section-product-card-2026 .wrap .tit {
+  #blog-section-product-card-2026 .wrap .tit {
     font-family: Inter;
     font-weight: 600;
     font-size: 32px;
     line-height: 1.1;
     margin: 0;
-
+    color: #fff;
   }
 
-  #section-product-card-2026 .wrap .des-wrap {
+  #blog-section-product-card-2026 .wrap .des-wrap {
     display: flex;
     justify-content: space-between;
     margin-top: 24px;
     padding-right: 30px;
   }
 
-  #section-product-card-2026 .wrap .des {
+  #blog-section-product-card-2026 .wrap .des {
     font-weight: 500;
     font-size: 16px;
     line-height: 120%;
     max-width: 64%;
     margin: 0;
     opacity: .8;
+    color: #fff;
   }
 
-  #section-product-card-2026 .wrap .btn {
+  #blog-section-product-card-2026 .wrap .btn {
     font-weight: 700;
     font-size: 20px;
     line-height: 100%;
@@ -91,62 +92,78 @@
   }
 
   @media(max-width:992px) {
-    #section-product-card-2026 .content {
+    #blog-section-product-card-2026 {
+      width: unset;
+    }
+
+    #blog-section-product-card-2026 .content {
       gap: 18px;
-      padding: 4px 14px 4px 4px;
+      padding: 14px;
+      flex-direction: column;
     }
 
-    #section-product-card-2026 .wrap .tit {
-      font-size: 13px;
+    #blog-section-product-card-2026 .wrap .tit {
+      font-size: 14px;
       line-height: 1.1;
+      text-align: center;
     }
 
-    #section-product-card-2026 .wrap .des {
+    #blog-section-product-card-2026 .wrap .des {
       font-size: 12px;
       line-height: 1.1;
       font-weight: 500;
+      max-width: 90%;
+      text-align: center;
+      margin: 0 auto 0;
+
     }
 
-    #section-product-card-2026 .content .lft {
-      width: 124px;
+    #blog-section-product-card-2026 .content .lft {
+      width: 126px;
+      text-align: center;
+      margin: 0 auto;
     }
 
-    #section-product-card-2026 .content .rgt {
+    #blog-section-product-card-2026 .content .rgt {
       padding-top: 0;
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
 
-    #section-product-card-2026 .wrap .des-wrap {
+    #blog-section-product-card-2026 .wrap .des-wrap {
       padding-right: 0;
       margin-top: 8px;
+      flex-direction: column;
     }
 
-    #section-product-card-2026 .content .btn-wrap {
+    #blog-section-product-card-2026 .content .btn-wrap {
       display: inline-flex;
       align-items: end;
       margin-left: 4px;
       padding-bottom: 4px;
+      width: fit-content;
+      margin: 12px auto 0;
     }
 
-    #section-product-card-2026 .wrap .btn {
+    #blog-section-product-card-2026 .wrap .btn {
       margin-top: 0;
       height: 30px;
-      padding: 0 14px;
+      padding: 0 24px;
       font-size: 12px;
       min-width: unset;
-
     }
   }
 </style>
 
 <body>
-  <section id="section-product-card-2026">
+  <section id="blog-section-product-card-2026">
     <div class="wrap">
       <div class="content">
         <div class="lft">
-          <img src="./images/section-product-card-left-product.png" alt="">
+          <img
+            src="https://cdn.shopify.com/s/files/1/0616/3326/5917/files/section-product-card-left-product.webp?v=1772695753"
+            alt="">
         </div>
         <div class="rgt">
           <p class="tit">Full-Spectrum Red LightTherapy Mat</p>
@@ -155,15 +172,16 @@
               Repair, engineered forfuller body renewal
             </p>
             <div class="btn-wrap">
-              <a href="" class="btn">
+              <a href="https://jovs.com/products/infrared-light-therapy-mat" class="btn">
                 Buy Now
               </a>
             </div>
           </div>
         </div>
-
       </div>
-      <img src="./images/section-product-card-bottom-img.png" alt="">
+      <img
+        src="https://cdn.shopify.com/s/files/1/0616/3326/5917/files/section-product-card-bottom-img.webp?v=1772695754"
+        alt="">
     </div>
   </section>
 </body>

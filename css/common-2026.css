@@ -87,6 +87,10 @@ img {
   margin-left: auto;
 }
 
+.position-relative {
+  position: relative;
+}
+
 @media (min-width: 576px) {
   .container {
     max-width: 100%;
@@ -126,6 +130,14 @@ img {
   gap: 15px;
 }
 
+.gap-24 {
+  gap: 24px;
+}
+
+.gap-2-5rem {
+  gap: 2.5rem;
+}
+
 .d-flex {
   display: flex;
 }
@@ -136,4 +148,8 @@ img {
 
 .text-black {
   color: var(--bs-black);
+}
+
+.text-white {
+  color: var(--bs-white);
 }/*# sourceMappingURL=common-2026.css.map */

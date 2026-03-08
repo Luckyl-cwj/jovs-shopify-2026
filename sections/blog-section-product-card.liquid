@@ -1,0 +1,103 @@
+{% assign section_dom_id = 'blog-section-product-card-' | append: section.id %}
+
+{% render 'blog-section-product-card-core',
+  dom_id: section_dom_id,
+  section_max_width: section.settings.section_max_width,
+  left_image: section.settings.left_image,
+  bottom_image: section.settings.bottom_image,
+  title: section.settings.title,
+  description: section.settings.description,
+  button_text: section.settings.button_text,
+  button_link: section.settings.button_link,
+  card_bg: section.settings.card_bg,
+  card_text: section.settings.card_text,
+  desc_text: section.settings.desc_text,
+  btn_bg: section.settings.btn_bg,
+  btn_text_color: section.settings.btn_text_color
+%}
+
+{% schema %}
+{
+  "name": "blog-section-product-card",
+  "settings": [
+    {
+      "type": "range",
+      "id": "section_max_width",
+      "label": "Section max width",
+      "min": 600,
+      "max": 1400,
+      "step": 1,
+      "unit": "px",
+      "default": 850
+    },
+    {
+      "type": "image_picker",
+      "id": "left_image",
+      "label": "Left image"
+    },
+    {
+      "type": "image_picker",
+      "id": "bottom_image",
+      "label": "Bottom image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Full-Spectrum Red Light Therapy Mat"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Modular Deep Red Light Repair, engineered for fuller body renewal."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Buy Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#015A20"
+    },
+    {
+      "type": "color",
+      "id": "card_text",
+      "label": "Title text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "desc_text",
+      "label": "Description text color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Button text color",
+      "default": "#000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "blog-section-product-card"
+    }
+  ]
+}
+{% endschema %}
