@@ -78,6 +78,7 @@ svg {
 
 img {
   max-width: 100%;
+  max-height: 100%;
   height: auto;
 }
 
@@ -124,7 +125,7 @@ img {
 
 @media (min-width: 1600px) {
   .container {
-    max-width: 1400px;
+    max-width: 1328px;
   }
 }
 
@@ -146,6 +147,9 @@ img {
 
 .d-flex {
   display: flex;
+}
+.align-items-center{
+  align-items: center;
 }
 .text-gray {
   color: var(--bs-gray);
