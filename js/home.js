@@ -16,8 +16,7 @@ var swiperProhibitSelect = new Swiper(".swiper-prohibit-select", {
   },
   on: {
     slideChange: function () {
-      swiperProhibitSelect.swiperIndex
-      console.log(1);
+      console.log(swiperProhibitSelect.activeIndex);
 
     }
 
