@@ -14,7 +14,7 @@
   --bs-body-line-height: 1.625;
   --bs-body-color: #080211;
   --bs-body-bg: #fff;
-  --bs-gutter-x: 1rem;
+  --bs-gutter-x: 1.5rem;
   --spaced-section: 8rem;
 }
 
@@ -82,8 +82,8 @@ img {
 
 .container {
   width: 100%;
-  padding-right: var(--bs-gutter-x, 1rem);
-  padding-left: var(--bs-gutter-x, 1rem);
+  padding-right: var(--bs-gutter-x, 1.5rem);
+  padding-left: var(--bs-gutter-x, 1.5rem);
   margin-right: auto;
   margin-left: auto;
 }
@@ -92,18 +92,19 @@ img {
   position: relative;
 }
 
-.container {
+.mw-100 {
   max-width: 100%;
 }
 
 @media (min-width: 992px) {
   .container {
-    max-width: 1224px;
+    max-width: 100%;
+    padding: 0px 3rem;
   }
 }
 @media (min-width: 1600px) {
   .container {
-    max-width: 1328px;
+    max-width: 1392px;
   }
 }
 @media (min-width: 1960px) {
@@ -115,12 +116,20 @@ img {
   gap: 15px;
 }
 
+.gap-20 {
+  gap: 20px;
+}
+
 .gap-24 {
   gap: 24px;
 }
 
 .gap-2-5rem {
   gap: 2.5rem;
+}
+
+.d-none {
+  display: none;
 }
 
 .d-flex {
@@ -133,10 +142,6 @@ img {
 
 .d-inline-block {
   display: inline-block;
-}
-
-.d-none {
-  display: none;
 }
 
 .flex-column {
@@ -199,12 +204,32 @@ img {
   align-self: stretch;
 }
 
+.flex-column {
+  flex-direction: column;
+}
+
+@media (min-width: 992px) {
+  .d-lg-block {
+    display: block;
+  }
+  .d-lg-flex {
+    display: flex;
+  }
+  .d-lg-none {
+    display: none;
+  }
+}
 .w-100 {
   width: 100%;
 }
 
 .h-100 {
   height: 100%;
+}
+
+.obj-fit-cover {
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .overflow-hidden {
@@ -248,13 +273,31 @@ img {
 }
 
 .text-gray {
-  color: var(--bs-gray);
+  color: var(--bs-gray) !important;
 }
 
 .text-black {
-  color: var(--bs-black);
+  color: var(--bs-black) !important;
 }
 
 .text-white {
-  color: var(--bs-white);
+  color: var(--bs-white) !important;
+}
+
+.mt-3 {
+  margin-top: 1.25rem;
+}
+
+.mt-4 {
+  margin-top: 1.5rem;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+@media (min-width: 992px) {
+  .mt-lg-0 {
+    margin-top: 0;
+  }
 }/*# sourceMappingURL=common-2026.css.map */
