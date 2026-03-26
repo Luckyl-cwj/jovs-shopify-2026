@@ -983,7 +983,7 @@ h2.section-title + .des {
   grid-template-columns: repeat(3, 1fr);
   gap: 14px;
 }
-#section-prohibit-select .swiper-prohibit-select-thumb .swiper-wrapper .swiper-slide .item {
+#section-prohibit-select .swiper-prohibit-select-thumb .swiper-wrapper .item {
   background: #fff;
 }
 #section-prohibit-select .swiper-prohibit-select-thumb .swiper-wrapper .img-wrap {
@@ -1180,11 +1180,11 @@ h2.section-title + .des {
     min-width: 70%;
     padding: 0;
     border-radius: 12px;
-    background: #f6f3ed;
+    background: none;
     scroll-snap-align: start;
   }
   #section-prohibit-select .swiper-prohibit-select-thumb .swiper-wrapper .img-wrap {
-    aspect-ratio: 1/0.72;
+    aspect-ratio: 1/0.6;
   }
   #section-prohibit-select .swiper-prohibit-select-thumb .swiper-wrapper .img-wrap img {
     width: 100%;
