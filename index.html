@@ -1,11 +1,221 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>JOVS Local Preview Index</title>
+  <link rel="stylesheet" href="./css/common-2026.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap"
+    rel="stylesheet">
+  <style>
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(246, 243, 237, 0.95), transparent 34%),
+        linear-gradient(180deg, #faf9f6 0%, #ffffff 260px);
+    }
+
+    .index-shell {
+      padding: 48px 0 80px;
+    }
+
+    .index-header {
+      margin-bottom: 32px;
+    }
+
+    .index-grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .index-section {
+      background: var(--color-surface-base);
+      border: 1px solid var(--color-border-muted);
+      border-radius: var(--radius-xl);
+      padding: 24px;
+      box-shadow: var(--shadow-card-soft);
+    }
+
+    .index-section h2 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .index-section>.section-des {
+      margin-bottom: 20px;
+    }
+
+    .index-card-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .index-card {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 0;
+      padding: 18px;
+      border-radius: var(--radius-md);
+      background: var(--color-surface-warm);
+      border: 1px solid var(--color-border-muted);
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+    }
+
+    .index-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--color-border-strong-soft);
+      box-shadow: var(--shadow-card-soft);
+      text-decoration: none;
+    }
+
+    .index-card .path {
+      display: inline-flex;
+      align-self: flex-start;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background: var(--color-surface-base);
+      color: var(--color-text-secondary);
+      font-size: 12px;
+      line-height: 1;
+      word-break: break-all;
+    }
+
+    .index-card .title {
+      margin: 0;
+      color: var(--color-text-primary);
+      font-size: 18px;
+      line-height: 1.3;
+      font-weight: 600;
+    }
+
+    .index-card .desc {
+      margin: 0;
+      color: var(--color-text-secondary);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .index-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .index-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: var(--radius-pill);
+      background: var(--color-ui-strong);
+      color: var(--bs-white);
+      font-size: 12px;
+      line-height: 1;
+    }
+  </style>
 </head>
+
 <body>
-  
+  <main class="index-shell">
+    <div class="container">
+      <header class="index-header">
+        <p class="index-badge mb-0">本地入口页</p>
+        <h1 class="section-title mt-20 mb-0">JOVS 页面与工具地址总览</h1>
+        <p class="section-des">
+          这个入口页只做一件事：把当前仓库里可直接打开的 HTML 地址集中起来，方便你切换预览。
+        </p>
+        <div class="index-meta">
+          <span class="path">/index.html</span>
+          <span class="path">包含业务页与工具页</span>
+        </div>
+      </header>
+
+      <div class="index-grid">
+        <section class="index-section">
+          <h2>业务页面</h2>
+          <p class="section-des">用于首页、组件和公共样式预览的页面入口。</p>
+          <div class="index-card-grid">
+            <a class="index-card" href="./home.html">
+              <span class="path">/home.html</span>
+              <p class="title">首页重构预览</p>
+              <p class="desc">当前首页主页面，包含重构后的 section、Swiper 和资源内容。</p>
+            </a>
+
+            <a class="index-card" href="./common-preview.html">
+              <span class="path">/common-preview.html</span>
+              <p class="title">公共样式预览</p>
+              <p class="desc">专门用于检查 common token、utility class 和基础组件表现。</p>
+            </a>
+
+            <a class="index-card" href="./guide-blog-section-product-card.html">
+              <span class="path">/guide-blog-section-product-card.html</span>
+              <p class="title">Guide Blog Section Product Card</p>
+              <p class="desc">博客/导购卡片相关页面预览入口。</p>
+            </a>
+
+            <a class="index-card" href="./section-product-card.html">
+              <span class="path">/section-product-card.html</span>
+              <p class="title">Section Product Card</p>
+              <p class="desc">产品卡片 section 的独立预览页。</p>
+            </a>
+
+            <a class="index-card" href="./section-product-card%20copy.html">
+              <span class="path">/section-product-card copy.html</span>
+              <p class="title">Section Product Card Copy</p>
+              <p class="desc">产品卡片 section 的复制版本预览页。</p>
+            </a>
+          </div>
+        </section>
+
+        <section class="index-section">
+          <h2>工具页面</h2>
+          <p class="section-des">仓库里已有的内部工具入口，也统一放到这里，避免到目录里单独找。</p>
+          <div class="index-card-grid">
+            <a class="index-card" href="./tools/crawler/index.html">
+              <span class="path">/tools/crawler/index.html</span>
+              <p class="title">Crawler Tools</p>
+              <p class="desc">采集相关工具的主入口页。</p>
+            </a>
+
+            <a class="index-card" href="./tools/crawler/checkLink/index.html">
+              <span class="path">/tools/crawler/checkLink/index.html</span>
+              <p class="title">CheckLink Index</p>
+              <p class="desc">链接检查工具的索引页。</p>
+            </a>
+
+            <a class="index-card" href="./tools/crawler/checkLink/checkLink.html">
+              <span class="path">/tools/crawler/checkLink/checkLink.html</span>
+              <p class="title">CheckLink</p>
+              <p class="desc">单页链接检查工具页面。</p>
+            </a>
+
+            <a class="index-card" href="./tools/crawler/checkLink/batchCheck.html">
+              <span class="path">/tools/crawler/checkLink/batchCheck.html</span>
+              <p class="title">Batch Check</p>
+              <p class="desc">批量链接检查工具页面。</p>
+            </a>
+
+            <a class="index-card" href="./tools/word-image-extractor/index.html">
+              <span class="path">/tools/word-image-extractor/index.html</span>
+              <p class="title">Word Image Extractor</p>
+              <p class="desc">文档图片提取工具页面。</p>
+            </a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
 </body>
+
 </html>
