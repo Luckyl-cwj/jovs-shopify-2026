@@ -269,6 +269,116 @@ function bindMediaQueryChange(mediaQuery, handler) {
   }
 }
 
+function getSwiperControlLabel(control) {
+  if (!control) {
+    return "";
+  }
+
+  if (
+    control.classList.contains("btn-swiper-prev") ||
+    control.classList.contains("swiper-button-prev")
+  ) {
+    return "Previous slide";
+  }
+
+  if (
+    control.classList.contains("btn-swiper-next") ||
+    control.classList.contains("swiper-button-next")
+  ) {
+    return "Next slide";
+  }
+
+  return "";
+}
+
+function isSwiperControlElement(element) {
+  return !!(
+    element &&
+    element.classList &&
+    (element.classList.contains("swiper-arrow") ||
+      element.classList.contains("swiper-button-prev") ||
+      element.classList.contains("swiper-button-next"))
+  );
+}
+
+function refreshAccessibleSwiperControls() {
+  var swiperControls = document.querySelectorAll(
+    ".swiper-arrow, .swiper-button-prev, .swiper-button-next"
+  );
+
+  Array.prototype.forEach.call(swiperControls, function (control) {
+    var label = getSwiperControlLabel(control);
+    var isDisabled = control.classList.contains("swiper-button-disabled");
+    var icon = control.querySelector("svg");
+
+    if (!control.dataset.a11yControlBound) {
+      control.dataset.a11yControlBound = "true";
+
+      control.addEventListener("keydown", function (event) {
+        var key = event.key;
+
+        if (key !== "Enter" && key !== " " && key !== "Spacebar") {
+          return;
+        }
+
+        event.preventDefault();
+
+        if (control.getAttribute("aria-disabled") === "true") {
+          return;
+        }
+
+        control.click();
+      });
+    }
+
+    control.setAttribute("role", "button");
+
+    if (label && !control.getAttribute("aria-label")) {
+      control.setAttribute("aria-label", label);
+    }
+
+    control.setAttribute("aria-disabled", isDisabled ? "true" : "false");
+    control.setAttribute("tabindex", isDisabled ? "-1" : "0");
+
+    if (icon) {
+      icon.setAttribute("aria-hidden", "true");
+      icon.setAttribute("focusable", "false");
+    }
+  });
+}
+
+function initAccessibleSwiperControls() {
+  refreshAccessibleSwiperControls();
+
+  if (!("MutationObserver" in window)) {
+    return;
+  }
+
+  var observer = new MutationObserver(function (mutations) {
+    var shouldRefresh = mutations.some(function (mutation) {
+      if (mutation.type === "childList") {
+        return (
+          Array.prototype.some.call(mutation.addedNodes, isSwiperControlElement) ||
+          Array.prototype.some.call(mutation.removedNodes, isSwiperControlElement)
+        );
+      }
+
+      return isSwiperControlElement(mutation.target);
+    });
+
+    if (shouldRefresh) {
+      refreshAccessibleSwiperControls();
+    }
+  });
+
+  observer.observe(document.body, {
+    subtree: true,
+    childList: true,
+    attributes: true,
+    attributeFilter: ["class"],
+  });
+}
+
 function initSwiperWhenVisible(element, initSwiper, rootMargin) {
   if (!element || !initSwiper) {
     return;
@@ -300,6 +410,7 @@ function initSwiperWhenVisible(element, initSwiper, rootMargin) {
 
 primeTopBannerHeroMedia();
 bindMediaQueryChange(topBannerMediaQuery, primeTopBannerHeroMedia);
+initAccessibleSwiperControls();
 
 var swiperTopBanner = new Swiper(".swiper-top-banner", {
   spaceBetween: 30,
