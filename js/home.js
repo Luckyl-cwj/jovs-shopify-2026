@@ -10,6 +10,13 @@ var swiperTopBannerPrevButton = document.querySelector(
 var swiperTopBannerNextButton = document.querySelector(
   "#section-top-banner .swiper-top-banner-progress .btn-swiper-next"
 );
+var topBannerMediaQuery = window.matchMedia("(max-width: 992px)");
+var topBannerDesktopVideo = document.querySelector(
+  '#section-top-banner .item-video video[data-top-banner-variant="desktop"]'
+);
+var topBannerMobileVideo = document.querySelector(
+  '#section-top-banner .item-video video[data-top-banner-variant="mobile"]'
+);
 var swiperProhibitSelectProgressFill = document.querySelector(
   "#section-prohibit-select   .swiper-progress-bar-fill"
 );
@@ -242,6 +249,14 @@ function requestTopBannerVideoSync(swiper) {
   }, 0);
 }
 
+function getInitialTopBannerVideo() {
+  return topBannerMediaQuery.matches ? topBannerMobileVideo : topBannerDesktopVideo;
+}
+
+function primeTopBannerHeroMedia() {
+  ensureTopBannerVideoSources(getInitialTopBannerVideo());
+}
+
 function bindMediaQueryChange(mediaQuery, handler) {
   if (!mediaQuery || !handler) {
     return;
@@ -282,6 +297,9 @@ function initSwiperWhenVisible(element, initSwiper, rootMargin) {
 
   observer.observe(element);
 }
+
+primeTopBannerHeroMedia();
+bindMediaQueryChange(topBannerMediaQuery, primeTopBannerHeroMedia);
 
 var swiperTopBanner = new Swiper(".swiper-top-banner", {
   spaceBetween: 30,
@@ -467,6 +485,8 @@ function initProhibitSelectSwipers() {
     setTimeout(refreshProhibitSelectLayout, 0);
   }
 
+  setTimeout(refreshProhibitSelectLayout, 120);
+
   Array.prototype.forEach.call(prohibitSelectImages, function (image) {
     if (image.complete) {
       return;
@@ -474,6 +494,8 @@ function initProhibitSelectSwipers() {
 
     image.addEventListener("load", refreshProhibitSelectLayout, { once: true });
   });
+
+  window.addEventListener("load", refreshProhibitSelectLayout, { once: true });
 
   if (prohibitSelectNavigationBound) {
     return;

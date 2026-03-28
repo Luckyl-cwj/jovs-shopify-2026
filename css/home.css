@@ -33,6 +33,7 @@ h2 {
 #section-top-banner picture {
   display: block;
   height: 100%;
+  background-color: var(--color-surface-placeholder-soft);
 }
 #section-top-banner .img-wrap img,
 #section-top-banner .item-video video {

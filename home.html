@@ -5,9 +5,444 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="./css/common-2026.css">
-  <link rel="stylesheet" href="./css/home.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
+  <style>
+    :root {
+      --bs-white: #fff;
+      --color-text-primary: #000;
+      --color-text-caption: #a8a8a8;
+      --color-text-inverse-soft: #e9e7e6;
+      --color-surface-base: #fff;
+      --color-surface-fallback: #919191;
+      --color-surface-placeholder-soft: #eee;
+      --color-ui-strong: #1a1a1a;
+      --color-ui-track: #d9d9d9;
+      --radius-xs: 5px;
+      --radius-md: 12px;
+      --space-2: 8px;
+      --space-5: 20px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Instrument Sans", sans-serif;
+      color: var(--color-text-primary);
+      background: var(--color-surface-base);
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    img,
+    svg {
+      vertical-align: middle;
+    }
+
+    .d-none {
+      display: none;
+    }
+
+    .d-flex {
+      display: flex;
+    }
+
+    .align-items-center {
+      align-items: center;
+    }
+
+    .justify-content-center {
+      justify-content: center;
+    }
+
+    .justify-content-end {
+      justify-content: end;
+    }
+
+    .w-100 {
+      width: 100%;
+    }
+
+    .h-100 {
+      height: 100%;
+    }
+
+    .obj-fit-cover {
+      object-fit: cover;
+    }
+
+    .text-white {
+      color: var(--bs-white) !important;
+    }
+
+    .mt-20 {
+      margin-top: 20px;
+    }
+
+    .swiper {
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .swiper-wrapper {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      box-sizing: content-box;
+    }
+
+    .swiper-slide {
+      flex-shrink: 0;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      display: block;
+    }
+
+    .swiper-arrow {
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .swiper-progress-bar {
+      width: 100px;
+      height: 8px;
+      background-color: var(--color-ui-track);
+      border-radius: var(--radius-md);
+      position: relative;
+      margin: 0 4px;
+      overflow: hidden;
+    }
+
+    .swiper-progress-bar .swiper-progress-bar-fill {
+      width: 0;
+      height: 8px;
+      background: var(--color-ui-strong);
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: all 0.4s;
+    }
+
+    #section-top-banner {
+      aspect-ratio: 1905/735;
+      background-color: var(--color-surface-fallback);
+      overflow: hidden;
+    }
+
+    #section-top-banner .swiper-top-banner {
+      height: 100%;
+      position: relative;
+    }
+
+    #section-top-banner .swiper-top-banner .swiper-wrapper,
+    #section-top-banner .swiper-top-banner .swiper-slide,
+    #section-top-banner .item,
+    #section-top-banner .img-wrap,
+    #section-top-banner picture {
+      height: 100%;
+    }
+
+    #section-top-banner .item {
+      position: relative;
+    }
+
+    #section-top-banner .img-wrap,
+    #section-top-banner picture {
+      display: block;
+      background-color: var(--color-surface-placeholder-soft);
+    }
+
+    #section-top-banner .img-wrap img,
+    #section-top-banner .item-video video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    #section-top-banner .text-wrap {
+      position: absolute;
+      top: 50%;
+      left: 16%;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: calc(100% - 180px);
+      max-width: 700px;
+    }
+
+    #section-top-banner .tit {
+      color: var(--color-text-primary);
+      font-size: 32px;
+      line-height: 1.1;
+      font-weight: 600;
+      margin: 0 0 20px;
+    }
+
+    #section-top-banner .des {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.1;
+    }
+
+    #section-top-banner a.btn {
+      border-radius: var(--radius-xs);
+      background: var(--color-text-primary);
+      padding: var(--space-2) var(--space-5);
+      color: var(--bs-white);
+      display: inline-flex;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 24px;
+    }
+
+    #section-top-banner a.btn.btn-white {
+      background: var(--color-surface-base);
+      color: var(--color-text-primary);
+    }
+
+    #section-top-banner .text-image {
+      position: relative;
+      height: 34px;
+      aspect-ratio: 1/0.12;
+      margin-top: 80px;
+    }
+
+    #section-top-banner .text-image svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    #section-top-banner .text-image span {
+      width: 71%;
+      padding: 0 0.3rem;
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      color: var(--color-text-caption);
+      font-size: 12px;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    #section-top-banner .item-video h2 {
+      font-size: clamp(28px, 4vw, 55px);
+      line-height: 1.1;
+      margin: 0 0 20px;
+    }
+
+    #section-top-banner .item-video h2 + .des {
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--bs-white);
+    }
+
+    #section-top-banner .swiper-top-banner-progress {
+      position: absolute;
+      right: 24px;
+      bottom: 40px;
+      z-index: 10;
+      color: var(--bs-white);
+    }
+
+    #section-top-banner .swiper-top-banner-progress .swiper-progress-bar-fill {
+      background: var(--color-surface-base);
+    }
+
+    @media (min-width: 992px) {
+      .d-lg-block {
+        display: block;
+      }
+
+      .d-lg-flex {
+        display: flex;
+      }
+
+      .d-lg-none {
+        display: none;
+      }
+
+      .mt-lg-0 {
+        margin-top: 0;
+      }
+    }
+
+    @media (min-width: 1600px) {
+      #section-top-banner .text-wrap {
+        left: 14%;
+      }
+
+      #section-top-banner .swiper-top-banner-progress {
+        right: 32px;
+        bottom: 44px;
+      }
+    }
+
+    @media (max-width: 992px) {
+      #section-top-banner {
+        aspect-ratio: auto;
+      }
+
+      #section-top-banner .swiper-top-banner {
+        height: min(75vh, 620px);
+        min-height: 560px;
+      }
+
+      #section-top-banner .text-wrap {
+        top: auto;
+        right: 20px;
+        bottom: 90px;
+        left: 20px;
+        transform: none;
+        width: calc(100% - 40px);
+        max-width: 320px;
+      }
+
+      #section-top-banner .item-video .text-wrap {
+        top: 50%;
+        left: 20px;
+        transform: translateY(-50%);
+      }
+
+      #section-top-banner .tit,
+      #section-top-banner .item-video h2 {
+        margin-bottom: 10px;
+        font-size: clamp(24px, 7vw, 32px);
+        color: var(--bs-white);
+      }
+
+      #section-top-banner .des {
+        color: var(--bs-white);
+        max-width: 30ch;
+        font-size: 14px;
+        line-height: 1.35;
+      }
+
+      #section-top-banner .item-video h2 + .des {
+        font-size: 16px;
+        line-height: 1.35;
+      }
+
+      #section-top-banner a.btn {
+        margin-top: 0;
+        padding: var(--space-2) 18px;
+        flex-shrink: 0;
+        font-size: 12px;
+        line-height: 1;
+        background: var(--color-surface-base);
+        color: var(--color-text-primary);
+      }
+
+      #section-top-banner .item-video a.btn {
+        margin-top: 24px;
+      }
+
+      #section-top-banner .text-image {
+        height: 28px;
+        margin-top: 0;
+        margin-left: 10px;
+      }
+
+      #section-top-banner .text-image svg {
+        height: 30px;
+      }
+
+      #section-top-banner .text-image span {
+        width: 70%;
+        font-size: 10px;
+        color: var(--color-text-primary);
+      }
+
+      #section-top-banner .swiper-top-banner-progress {
+        right: 20px;
+        bottom: 20px;
+      }
+    }
+
+    @media (max-width: 450px) {
+      #section-top-banner .swiper-top-banner {
+        height: 624px;
+        min-height: 500px;
+      }
+
+      #section-top-banner .text-wrap {
+        bottom: 50px;
+        left: 26px;
+        max-width: calc(100% - 32px);
+      }
+
+      #section-top-banner .item-video .text-wrap {
+        left: 24px;
+      }
+
+      #section-top-banner .item-video .text-wrap .des {
+        font-size: 16px;
+      }
+
+      #section-top-banner .item-video a.btn {
+        margin-top: 20px;
+      }
+
+      #section-top-banner .tit,
+      #section-top-banner .item-video h2 {
+        font-size: 24px;
+      }
+
+      #section-top-banner .des {
+        font-size: 16px;
+        color: var(--color-text-inverse-soft);
+        font-weight: 400;
+      }
+
+      #section-top-banner a.btn {
+        padding: var(--space-2) var(--space-5);
+        height: 32px;
+      }
+
+      #section-top-banner .text-image {
+        height: 26px;
+      }
+
+      #section-top-banner .swiper-top-banner-progress {
+        right: 16px;
+        bottom: 16px;
+      }
+
+      #section-top-banner .swiper-top-banner-progress .swiper-progress-bar,
+      #section-top-banner .swiper-top-banner-progress .swiper-progress-bar .swiper-progress-bar-fill {
+        height: 6px;
+      }
+
+      #section-top-banner .swiper-top-banner-progress .swiper-progress-bar {
+        width: 72px;
+      }
+    }
+  </style>
+  <link rel="preload" href="./css/common-2026.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="./css/home.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="./css/common-2026.css">
+    <link rel="stylesheet" href="./css/home.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
+  </noscript>
+  <link rel="dns-prefetch" href="//jovs.com">
+  <link rel="preconnect" href="https://jovs.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -33,22 +468,24 @@
       <div class="swiper-wrapper">
         <div class="swiper-slide item item-video">
           <div class="d-none d-lg-block h-100" plerdy-tracking-id="90650137101">
-            <video loop="" playsinline="" muted="" preload="none" class="w-100">
+            <video loop="" playsinline="" muted="" preload="metadata" class="w-100" data-top-banner-variant="desktop"
+              poster="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAwIDkwMCI+PHJlY3Qgd2lkdGg9IjE2MDAiIGhlaWdodD0iOTAwIiBmaWxsPSIjMTExMTExIi8+PC9zdmc+">
               <source
-                data-src="//jovs.com/cdn/shop/videos/c/vp/dafa2495a818466db1ffe261dcd3cacf/dafa2495a818466db1ffe261dcd3cacf.m3u8?v=0"
+                data-src="https://jovs.com/cdn/shop/videos/c/vp/dafa2495a818466db1ffe261dcd3cacf/dafa2495a818466db1ffe261dcd3cacf.m3u8?v=0"
                 type="application/x-mpegURL">
               <source
-                data-src="//jovs.com/cdn/shop/videos/c/vp/dafa2495a818466db1ffe261dcd3cacf/dafa2495a818466db1ffe261dcd3cacf.HD-720p-4.5Mbps-77118263.mp4?v=0"
+                data-src="https://jovs.com/cdn/shop/videos/c/vp/dafa2495a818466db1ffe261dcd3cacf/dafa2495a818466db1ffe261dcd3cacf.HD-720p-4.5Mbps-77118263.mp4?v=0"
                 type="video/mp4">
             </video>
           </div>
           <div class="d-lg-none h-100" plerdy-tracking-id="85384213001">
-            <video loop="" playsinline="" muted="" preload="none" class="w-100">
+            <video loop="" playsinline="" muted="" preload="metadata" class="w-100" data-top-banner-variant="mobile"
+              poster="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNjAwIDkwMCI+PHJlY3Qgd2lkdGg9IjE2MDAiIGhlaWdodD0iOTAwIiBmaWxsPSIjMTExMTExIi8+PC9zdmc+">
               <source
-                data-src="//jovs.com/cdn/shop/videos/c/vp/de253afb584e48019775c44b444cbd3a/de253afb584e48019775c44b444cbd3a.m3u8?v=0"
+                data-src="https://jovs.com/cdn/shop/videos/c/vp/de253afb584e48019775c44b444cbd3a/de253afb584e48019775c44b444cbd3a.m3u8?v=0"
                 type="application/x-mpegURL">
               <source
-                data-src="//jovs.com/cdn/shop/videos/c/vp/de253afb584e48019775c44b444cbd3a/de253afb584e48019775c44b444cbd3a.HD-1080p-7.2Mbps-77118262.mp4?v=0"
+                data-src="https://jovs.com/cdn/shop/videos/c/vp/de253afb584e48019775c44b444cbd3a/de253afb584e48019775c44b444cbd3a.HD-1080p-7.2Mbps-77118262.mp4?v=0"
                 type="video/mp4">
             </video>
           </div>
@@ -66,23 +503,23 @@
 
             <picture>
               <source media="(min-width: 2440px)"
-                srcset="//jovs.com/cdn/shop/files/2025_Home_JM2_PC_03.png?v=1759037752&amp;width=5600" width="1440"
+                srcset="https://jovs.com/cdn/shop/files/2025_Home_JM2_PC_03.png?v=1759037752&amp;width=5600" width="1440"
                 height="620">
               <source media="(min-width: 1920px)"
-                srcset="//jovs.com/cdn/shop/files/2025_Home_JM2_PC_03.png?v=1759037752&amp;width=3560" width="1440"
+                srcset="https://jovs.com/cdn/shop/files/2025_Home_JM2_PC_03.png?v=1759037752&amp;width=3560" width="1440"
                 height="620">
               <source media="(min-width:  1440px)"
-                srcset="//jovs.com/cdn/shop/files/2025_Home_JM2_PC_03.png?v=1759037752&amp;width=2080" width="1440"
+                srcset="https://jovs.com/cdn/shop/files/2025_Home_JM2_PC_03.png?v=1759037752&amp;width=2080" width="1440"
                 height="620">
               <source media="(min-width:  990px)"
-                srcset="//jovs.com/cdn/shop/files/2025_Home_JM2_PC_03.png?v=1759037752&amp;width=1440" width="1440"
+                srcset="https://jovs.com/cdn/shop/files/2025_Home_JM2_PC_03.png?v=1759037752&amp;width=1440" width="1440"
                 height="620">
               <source media="(min-width:  550px)"
-                srcset="//jovs.com/cdn/shop/files/2025_Home_JM2_PC_03.png?v=1759037752&amp;width=800" width="1440"
+                srcset="https://jovs.com/cdn/shop/files/2025_Home_JM2_PC_03.png?v=1759037752&amp;width=800" width="1440"
                 height="620">
-              <img src="//jovs.com/cdn/shop/files/2025_Home_JM2_APP_02.png?v=1759037752&width=600"
-                alt="Clinic-Level Anti-Aging at Home" width="1440" height="620" loading="lazy"
-                decoding="async" class="w-100 h-100 obj-fit-cover">
+              <img src="https://jovs.com/cdn/shop/files/2025_Home_JM2_APP_02.png?v=1759037752&width=600"
+                alt="Clinic-Level Anti-Aging at Home" width="1440" height="620" loading="eager"
+                fetchpriority="high" decoding="async" class="w-100 h-100 obj-fit-cover">
             </picture>
           </div>
 
@@ -113,21 +550,21 @@
           <div class="img-wrap h-100">
             <picture>
               <source media="(min-width: 2440px)"
-                srcset="//jovs.com/cdn/shop/files/US_YBK_banner_PC.webp?v=1772795331&amp;width=5600" width="1440"
+                srcset="https://jovs.com/cdn/shop/files/US_YBK_banner_PC.webp?v=1772795331&amp;width=5600" width="1440"
                 height="620">
               <source media="(min-width: 1920px)"
-                srcset="//jovs.com/cdn/shop/files/US_YBK_banner_PC.webp?v=1772795331&amp;width=3560" width="1440"
+                srcset="https://jovs.com/cdn/shop/files/US_YBK_banner_PC.webp?v=1772795331&amp;width=3560" width="1440"
                 height="620">
               <source media="(min-width:  1440px)"
-                srcset="//jovs.com/cdn/shop/files/US_YBK_banner_PC.webp?v=1772795331&amp;width=2080" width="1440"
+                srcset="https://jovs.com/cdn/shop/files/US_YBK_banner_PC.webp?v=1772795331&amp;width=2080" width="1440"
                 height="620">
               <source media="(min-width:  993px)"
-                srcset="//jovs.com/cdn/shop/files/US_YBK_banner_PC.webp?v=1772795331&amp;width=1440" width="1440"
+                srcset="https://jovs.com/cdn/shop/files/US_YBK_banner_PC.webp?v=1772795331&amp;width=1440" width="1440"
                 height="620">
               <source media="(min-width:  550px)"
-                srcset="//jovs.com/cdn/shop/files/US_YBK_banner_PC.webp?v=1772795331&amp;width=800" width="1440"
+                srcset="https://jovs.com/cdn/shop/files/US_YBK_banner_PC.webp?v=1772795331&amp;width=800" width="1440"
                 height="620">
-              <img src="//jovs.com/cdn/shop/files/US_YBK_banner_APP.webp?v=1772795331&width=600"
+              <img src="https://jovs.com/cdn/shop/files/US_YBK_banner_APP.webp?v=1772795331&width=600"
                 alt="PAY WITH HSA/FSA" class="w-100 h-100 obj-fit-cover" width="1440" height="620" loading="lazy"
                 decoding="async">
             </picture>
@@ -186,11 +623,11 @@
           <div class="item">
             <div class="img-wrap position-relative">
               <a href="/products/4d-laser-light-therapy-mask">
-                <img class="default-img" src="https://jovs.com//cdn/shop/files/JM2_2025.jpg?v=1758866034&width=600"
-                  alt="JOVS 4D Laser Light Therapy Mask" loading="lazy" decoding="async">
+                <img class="default-img" src="https://jovs.com/cdn/shop/files/JM2_2025.jpg?v=1758866034&width=600"
+                  alt="JOVS 4D Laser Light Therapy Mask" width="600" height="600" loading="lazy" decoding="async">
                 <img class="hover-img"
-                  src="https://jovs.com//cdn/shop/files/04_85df671d-d385-43ea-afa3-8e5b3ad2d57b.png?v=1767116352&width=600"
-                  alt="JOVS 4D Laser Light Therapy Mask" loading="lazy" decoding="async">
+                  src="https://jovs.com/cdn/shop/files/04_85df671d-d385-43ea-afa3-8e5b3ad2d57b.png?v=1767116352&width=600"
+                  alt="JOVS 4D Laser Light Therapy Mask" width="600" height="600" loading="lazy" decoding="async">
               </a>
             </div>
             <div class="content-item">
@@ -211,11 +648,11 @@
             <div class="img-wrap position-relative">
               <a href="/products/ems-toning-shorts">
                 <img class="default-img"
-                  src="https://jovs.com//cdn/shop/files/toningshort_c0921e40-9f61-4255-bac3-c930dec19305.jpg?v=1767941995&width=600"
-                  alt="JOVS EMS Toning Shorts" loading="lazy" decoding="async">
+                  src="https://jovs.com/cdn/shop/files/toningshort_c0921e40-9f61-4255-bac3-c930dec19305.jpg?v=1767941995&width=600"
+                  alt="JOVS EMS Toning Shorts" width="600" height="600" loading="lazy" decoding="async">
                 <img class="hover-img"
-                  src="https://jovs.com//cdn/shop/files/05_4bfcf199-b8b6-4215-bdef-7812abe5493c.jpg?v=1770891732&width=600"
-                  alt="JOVS EMS Toning Shorts" loading="lazy" decoding="async">
+                  src="https://jovs.com/cdn/shop/files/05_4bfcf199-b8b6-4215-bdef-7812abe5493c.jpg?v=1770891732&width=600"
+                  alt="JOVS EMS Toning Shorts" width="600" height="600" loading="lazy" decoding="async">
               </a>
             </div>
             <div class="content-item">
@@ -236,10 +673,10 @@
             <div class="img-wrap position-relative">
               <a href="/products/infrared-light-therapy-mat">
                 <img class="default-img"
-                  src="https://jovs.com//cdn/shop/files/20251230-163400.png?v=1767084597&width=600"
-                  alt="JOVS Infrared Light Therapy Mat Full-Spectrum Tech" loading="lazy" decoding="async">
-                <img class="hover-img" src="https://jovs.com//cdn/shop/files/Main_04.png?v=1767084597&width=600"
-                  alt="JOVS Infrared Light Therapy Mat Full-Spectrum Tech" loading="lazy" decoding="async">
+                  src="https://jovs.com/cdn/shop/files/20251230-163400.png?v=1767084597&width=600"
+                  alt="JOVS Infrared Light Therapy Mat Full-Spectrum Tech" width="600" height="600" loading="lazy" decoding="async">
+                <img class="hover-img" src="https://jovs.com/cdn/shop/files/Main_04.png?v=1767084597&width=600"
+                  alt="JOVS Infrared Light Therapy Mat Full-Spectrum Tech" width="600" height="600" loading="lazy" decoding="async">
               </a>
             </div>
             <div class="content-item">
@@ -255,10 +692,10 @@
           <div class="item">
             <div class="img-wrap position-relative">
               <a href="/products/microcurrent-laser-anti-aging-device">
-                <img class="default-img" src="https://jovs.com//cdn/shop/files/JE2_2025.jpg?v=1758865958&width=600"
-                  alt="JOVS Slimax Microcurrent &amp; Laser Light Anti-aging Device" loading="lazy" decoding="async">
-                <img class="hover-img" src="https://jovs.com//cdn/shop/files/Second_pic_JE2.jpg?v=1765290844&width=600"
-                  alt="JOVS Slimax Microcurrent &amp; Laser Light Anti-aging Device" loading="lazy" decoding="async">
+                <img class="default-img" src="https://jovs.com/cdn/shop/files/JE2_2025.jpg?v=1758865958&width=600"
+                  alt="JOVS Slimax Microcurrent &amp; Laser Light Anti-aging Device" width="600" height="600" loading="lazy" decoding="async">
+                <img class="hover-img" src="https://jovs.com/cdn/shop/files/Second_pic_JE2.jpg?v=1765290844&width=600"
+                  alt="JOVS Slimax Microcurrent &amp; Laser Light Anti-aging Device" width="600" height="600" loading="lazy" decoding="async">
               </a>
             </div>
             <div class="content-item">
@@ -279,10 +716,10 @@
           <div class="item">
             <div class="img-wrap position-relative">
               <a href="/products/blacken-pro-dpl-photofacial-device">
-                <img class="default-img" src="https://jovs.com//cdn/shop/files/JP1P_2025.jpg?v=1758866063&width=600"
-                  alt="JOVS Blacken Pro DPL Photofacial Skincare Device" loading="lazy" decoding="async">
-                <img class="hover-img" src="https://jovs.com//cdn/shop/files/1080.jpg?v=1765290940&width=600"
-                  alt="JOVS Blacken Pro DPL Photofacial Skincare Device" loading="lazy" decoding="async">
+                <img class="default-img" src="https://jovs.com/cdn/shop/files/JP1P_2025.jpg?v=1758866063&width=600"
+                  alt="JOVS Blacken Pro DPL Photofacial Skincare Device" width="600" height="600" loading="lazy" decoding="async">
+                <img class="hover-img" src="https://jovs.com/cdn/shop/files/1080.jpg?v=1765290940&width=600"
+                  alt="JOVS Blacken Pro DPL Photofacial Skincare Device" width="600" height="600" loading="lazy" decoding="async">
               </a>
             </div>
             <div class="content-item">
@@ -302,11 +739,11 @@
           <div class="item">
             <div class="img-wrap position-relative">
               <a href="/products/ems-lifting-mask">
-                <img class="default-img" src="https://jovs.com//cdn/shop/files/EMS_Mask_2025.jpg?v=1758865611&width=600"
-                  alt="JOVS EMS Lifting Face Mask" loading="lazy" decoding="async">
+                <img class="default-img" src="https://jovs.com/cdn/shop/files/EMS_Mask_2025.jpg?v=1758865611&width=600"
+                  alt="JOVS EMS Lifting Face Mask" width="600" height="600" loading="lazy" decoding="async">
                 <img class="hover-img"
-                  src="https://jovs.com//cdn/shop/files/Second_pic_EMS_Mask.jpg?v=1765291036&width=600"
-                  alt="JOVS EMS Lifting Face Mask" loading="lazy" decoding="async">
+                  src="https://jovs.com/cdn/shop/files/Second_pic_EMS_Mask.jpg?v=1765291036&width=600"
+                  alt="JOVS EMS Lifting Face Mask" width="600" height="600" loading="lazy" decoding="async">
               </a>
             </div>
             <div class="content-item">
@@ -333,8 +770,8 @@
         <div class="item">
           <div class="img-wrap position-relative">
             <img
-              src="https://jovs.com//cdn/shop/files/Mask_group_dad54e9f-a52a-4c17-8eda-3d04e2c8f881.png?v=1758782628&width=1200"
-              alt="Red Light, Laser &amp; LED Technology" loading="lazy" decoding="async">
+              src="https://jovs.com/cdn/shop/files/Mask_group_dad54e9f-a52a-4c17-8eda-3d04e2c8f881.png?v=1758782628&width=1200"
+              alt="Red Light, Laser &amp; LED Technology" width="1200" height="780" loading="lazy" decoding="async">
             <div class="img-text-wrap">
               <p class="tit text-white">
                 Red Light, Laser & LED Technology
@@ -358,8 +795,8 @@
         <div class="item is-active">
           <div class="img-wrap position-relative">
             <img
-              src="https://jovs.com//cdn/shop/files/Mask_group-1_b60e965a-ad2e-4599-bed2-ec24db72a275.png?v=1758782628&width=1200"
-              alt="EMS &amp; TENS Technology" loading="lazy" decoding="async">
+              src="https://jovs.com/cdn/shop/files/Mask_group-1_b60e965a-ad2e-4599-bed2-ec24db72a275.png?v=1758782628&width=1200"
+              alt="EMS &amp; TENS Technology" width="1200" height="780" loading="lazy" decoding="async">
             <div class="img-text-wrap">
               <p class="tit text-white">
                 EMS &amp; TENS Technology
@@ -383,8 +820,8 @@
         <div class="item">
           <div class="img-wrap position-relative">
             <img
-              src="https://jovs.com//cdn/shop/files/Mask_group-2_54c529cd-c44f-4c4c-ae96-57f19f1b389f.png?v=1758782916&width=1200"
-              alt="IPL Technology" loading="lazy" decoding="async">
+              src="https://jovs.com/cdn/shop/files/Mask_group-2_54c529cd-c44f-4c4c-ae96-57f19f1b389f.png?v=1758782916&width=1200"
+              alt="IPL Technology" width="1200" height="780" loading="lazy" decoding="async">
             <div class="img-text-wrap">
               <p class="tit text-white">
                 IPL Technology
@@ -408,8 +845,8 @@
         <div class="item">
           <div class="img-wrap position-relative">
             <img
-              src="https://jovs.com//cdn/shop/files/Mask_group-3_638a76e7-5f92-4e5b-bd56-d5d1249a4a02.png?v=1758782881&width=1200"
-              alt="DPL Technology" loading="lazy" decoding="async">
+              src="https://jovs.com/cdn/shop/files/Mask_group-3_638a76e7-5f92-4e5b-bd56-d5d1249a4a02.png?v=1758782881&width=1200"
+              alt="DPL Technology" width="1200" height="780" loading="lazy" decoding="async">
             <div class="img-text-wrap">
               <p class="tit text-white">
                 DPL Technology
@@ -442,43 +879,43 @@
         <div class="swiper-wrapper content-wrap">
           <div class="swiper-slide">
             <img
-              src="https://jovs.com//cdn/shop/files/Mask_group3_9487224b-df25-4955-ad92-7e8c5659c9a3.png?v=1758264399&width=456"
-              alt="" class="__w100" loading="lazy" decoding="async">
+              src="https://jovs.com/cdn/shop/files/Mask_group3_9487224b-df25-4955-ad92-7e8c5659c9a3.png?v=1758264399&width=456"
+              alt="" class="__w100" width="120" height="120" loading="lazy" decoding="async">
           </div>
           <div class="swiper-slide">
             <img
-              src="https://jovs.com//cdn/shop/files/Mask_group2_b19deed9-4909-489a-aa9d-f442f4da8d31.png?v=1758264399&width=456"
-              alt="" class="__w100" loading="lazy" decoding="async">
+              src="https://jovs.com/cdn/shop/files/Mask_group2_b19deed9-4909-489a-aa9d-f442f4da8d31.png?v=1758264399&width=456"
+              alt="" class="__w100" width="120" height="120" loading="lazy" decoding="async">
           </div>
           <div class="swiper-slide">
-            <img src="https://jovs.com//cdn/shop/files/IF_3x_2.png?v=1758264399&width=456" alt="" class="__w100" loading="lazy" decoding="async">
+            <img src="https://jovs.com/cdn/shop/files/IF_3x_2.png?v=1758264399&width=456" alt="" class="__w100" width="120" height="120" loading="lazy" decoding="async">
           </div>
           <div class="swiper-slide">
-            <img src="https://jovs.com//cdn/shop/files/1_3x_2.png?v=1758264399&width=456" alt="" class="__w100" loading="lazy" decoding="async">
+            <img src="https://jovs.com/cdn/shop/files/1_3x_2.png?v=1758264399&width=456" alt="" class="__w100" width="120" height="120" loading="lazy" decoding="async">
           </div>
           <div class="swiper-slide">
-            <img src="https://jovs.com//cdn/shop/files/1693366818winner_20_2.png?v=1758264399&width=408" alt=""
-              class="__w100" loading="lazy" decoding="async">
-          </div>
-          <div class="swiper-slide">
-            <img
-              src="https://jovs.com//cdn/shop/files/Mask_group5_2f65afc2-8ac4-4dce-8ea3-3fdf550c4143.png?v=1758264399&width=456"
-              alt="" class="__w100" loading="lazy" decoding="async">
+            <img src="https://jovs.com/cdn/shop/files/1693366818winner_20_2.png?v=1758264399&width=408" alt=""
+              class="__w100" width="120" height="120" loading="lazy" decoding="async">
           </div>
           <div class="swiper-slide">
             <img
-              src="https://jovs.com//cdn/shop/files/CPA_CosmopackAwards_Winner_InnovativeTech_4.png?v=1758264399&width=456"
-              alt="" class="__w100" loading="lazy" decoding="async">
+              src="https://jovs.com/cdn/shop/files/Mask_group5_2f65afc2-8ac4-4dce-8ea3-3fdf550c4143.png?v=1758264399&width=456"
+              alt="" class="__w100" width="120" height="120" loading="lazy" decoding="async">
           </div>
           <div class="swiper-slide">
             <img
-              src="https://jovs.com//cdn/shop/files/Mask_group4_e6d4d323-24ef-4a24-9d48-8402d35ecced.png?v=1758264399&width=456"
-              alt="" class="__w100" loading="lazy" decoding="async">
+              src="https://jovs.com/cdn/shop/files/CPA_CosmopackAwards_Winner_InnovativeTech_4.png?v=1758264399&width=456"
+              alt="" class="__w100" width="120" height="120" loading="lazy" decoding="async">
           </div>
           <div class="swiper-slide">
             <img
-              src="https://jovs.com//cdn/shop/files/20250922-161719_3x_c7a0cfb4-87e8-4780-8f8e-e8c70ad609f2.png?v=1758601388&width=2973"
-              alt="" class="__w100" loading="lazy" decoding="async">
+              src="https://jovs.com/cdn/shop/files/Mask_group4_e6d4d323-24ef-4a24-9d48-8402d35ecced.png?v=1758264399&width=456"
+              alt="" class="__w100" width="120" height="120" loading="lazy" decoding="async">
+          </div>
+          <div class="swiper-slide">
+            <img
+              src="https://jovs.com/cdn/shop/files/20250922-161719_3x_c7a0cfb4-87e8-4780-8f8e-e8c70ad609f2.png?v=1758601388&width=2973"
+              alt="" class="__w100" width="120" height="120" loading="lazy" decoding="async">
           </div>
         </div>
       </div>
@@ -494,8 +931,8 @@
           <div class="item swiper-slide">
             <div class="tit">
               <img
-                src="//jovs.com/cdn/shop/files/14_2x_5875ade3-d652-4b96-a258-af0b4abcdd0e.png?v=1758264629&amp;width=200"
-                alt="" class="brand-image" loading="lazy" decoding="async">
+                src="https://jovs.com/cdn/shop/files/14_2x_5875ade3-d652-4b96-a258-af0b4abcdd0e.png?v=1758264629&amp;width=200"
+                alt="" class="brand-image" width="140" height="30" loading="lazy" decoding="async">
             </div>
             <p class="des">
               JOVS devices bring professional-grade beauty tech to the comfort of home.
@@ -506,8 +943,8 @@
           </div>
           <div class="item swiper-slide">
             <div class="tit">
-              <img src="//jovs.com/cdn/shop/files/10_2x_4ae2b96e-16c8-43b1-9e2e-9b884facc759.png?v=1758264630&width=200"
-                alt="" class="brand-image" loading="lazy" decoding="async">
+              <img src="https://jovs.com/cdn/shop/files/10_2x_4ae2b96e-16c8-43b1-9e2e-9b884facc759.png?v=1758264630&width=200"
+                alt="" class="brand-image" width="140" height="30" loading="lazy" decoding="async">
             </div>
             <p class="des">
               JOVS offers sleek, effective devices that make skincare routines smarter.
@@ -518,8 +955,8 @@
           </div>
           <div class="item swiper-slide">
             <div class="tit">
-              <img src="//jovs.com/cdn/shop/files/11_2x_eb40eb3d-5dcf-418f-acb3-cecbc1eddfa5.png?v=1758264630&width=200"
-                alt="" class="brand-image" loading="lazy" decoding="async">
+              <img src="https://jovs.com/cdn/shop/files/11_2x_eb40eb3d-5dcf-418f-acb3-cecbc1eddfa5.png?v=1758264630&width=200"
+                alt="" class="brand-image" width="140" height="30" loading="lazy" decoding="async">
             </div>
             <p class="des">
               JOVS delivers luxury beauty experiences with advanced technology.
@@ -601,7 +1038,7 @@
               </div>
               <a class="btn-wrap product-card __text_decoration_none"
                 href="/products/jovs-4d-laser-light-therapy-mask-fda-certification" plerdy-tracking-id="22129312801">
-                <img src="//jovs.com/cdn/shop/files/JM2-ICON.png?v=1758266706&amp;width=600" alt="JOVS 4D Laser Anti-Aging Therapy Mask" class="product-image"
+                <img src="https://jovs.com/cdn/shop/files/JM2-ICON.png?v=1758266706&amp;width=600" alt="JOVS 4D Laser Anti-Aging Therapy Mask" class="product-image"
                   loading="lazy" plerdy-tracking-id="42324923101" decoding="async">
                 <h3 class="product-title" plerdy-tracking-id="92625338502">
                   JOVS 4D Laser Anti-Aging Therapy Mask
@@ -610,7 +1047,7 @@
               </a>
             </div>
             <div class="img-wrap">
-              <img src="//jovs.com/cdn/shop/files/Mask_group_923a2a6a-d0a5-4667-9dd2-7200428f19a5_800x800.png?v=1758601390"
+              <img src="https://jovs.com/cdn/shop/files/Mask_group_923a2a6a-d0a5-4667-9dd2-7200428f19a5_800x800.png?v=1758601390"
                 alt="4D Laser Mask treatment illustration" loading="lazy" decoding="async">
               <div class="tag-container">
                 <div class="tag-item">
@@ -644,7 +1081,7 @@
                   · Visible in 2 Weeks</p>
               </div>
               <a class="btn-wrap" href="/products/ems-toning-shorts" plerdy-tracking-id="22129312801">
-                <img src="//jovs.com/cdn/shop/files/JW1-ICON.png?v=1758266705&amp;width=600" alt="JOVS EMS-Toning Shorts" class="product-image"
+                <img src="https://jovs.com/cdn/shop/files/JW1-ICON.png?v=1758266705&amp;width=600" alt="JOVS EMS-Toning Shorts" class="product-image"
                   loading="lazy" plerdy-tracking-id="42324923101" decoding="async">
                 <h3 class="product-title" plerdy-tracking-id="92625338502">
                   JOVS Ems-Toning Shorts
@@ -653,7 +1090,7 @@
               </a>
             </div>
             <div class="img-wrap">
-              <img src="//jovs.com/cdn/shop/files/Mask_group_71a3656a-8bf7-4d97-9e64-cc4f011a5e50_800x800.png?v=1758266366"
+              <img src="https://jovs.com/cdn/shop/files/Mask_group_71a3656a-8bf7-4d97-9e64-cc4f011a5e50_800x800.png?v=1758266366"
                 alt="EMS-Toning Shorts treatment illustration" loading="lazy" decoding="async">
               <div class="tag-container">
                 <div class="tag-item">
@@ -684,7 +1121,7 @@
                   · Long-Lasting Smoothness</p>
               </div>
               <a class="btn-wrap" href="/products/ipl-hair-removal" plerdy-tracking-id="22129312801">
-                <img src="//jovs.com/cdn/shop/files/JR5E-ICON.png?v=1758266902&amp;width=600" alt="JOVS Pro II IPL Hair Removal Device" class="product-image"
+                <img src="https://jovs.com/cdn/shop/files/JR5E-ICON.png?v=1758266902&amp;width=600" alt="JOVS Pro II IPL Hair Removal Device" class="product-image"
                   loading="lazy" decoding="async">
                 <h3 class="product-title">
                   JOVS Pro II IPL Hair Removal Device
@@ -693,7 +1130,7 @@
               </a>
             </div>
             <div class="img-wrap">
-              <img src="//jovs.com/cdn/shop/files/Mask_group-1_b3967b65-cd21-42e4-a54e-1ead2a3aa01d_800x800.png?v=1758463630"
+              <img src="https://jovs.com/cdn/shop/files/Mask_group-1_b3967b65-cd21-42e4-a54e-1ead2a3aa01d_800x800.png?v=1758463630"
                 alt="IPL Hair Removal treatment illustration" loading="lazy" decoding="async">
               <div class="tag-container">
                 <div class="tag-item">
@@ -724,7 +1161,7 @@
                   · Safe &amp; Painless</p>
               </div>
               <a class="btn-wrap" href="/products/blacken-pro-dpl-photofacial-device">
-                <img src="//jovs.com/cdn/shop/files/JP1-P-ICON.png?v=1758266902&amp;width=600" alt="JOVS Blacken Pro DPL Photofacial Device" class="product-image"
+                <img src="https://jovs.com/cdn/shop/files/JP1-P-ICON.png?v=1758266902&amp;width=600" alt="JOVS Blacken Pro DPL Photofacial Device" class="product-image"
                   loading="lazy" decoding="async">
                 <h3 class="product-title">
                   JOVS 4D Laser Anti-Aging Therapy Mask
@@ -733,7 +1170,7 @@
               </a>
             </div>
             <div class="img-wrap">
-              <img src="//jovs.com/cdn/shop/files/Mask_group_d263aa22-0599-426c-b5fe-558338341bb7_800x800.png?v=1758463629"
+              <img src="https://jovs.com/cdn/shop/files/Mask_group_d263aa22-0599-426c-b5fe-558338341bb7_800x800.png?v=1758463629"
                 alt="DPL Photofacial treatment illustration" loading="lazy" decoding="async">
               <div class="tag-container">
                 <div class="tag-item">
@@ -773,7 +1210,7 @@
           <div class="swiper-slide">
             <div class="item">
               <div class="img-wrap">
-                <img src="//jovs.com/cdn/shop/files/BA_Mask_01.jpg?v=1758461622" alt="Wrinkle Reduction results" loading="lazy" decoding="async">
+                <img src="https://jovs.com/cdn/shop/files/BA_Mask_01.jpg?v=1758461622" alt="Wrinkle Reduction results" width="600" height="360" loading="lazy" decoding="async">
               </div>
               <p class="tit">
                 Wrinkle Reduction
@@ -784,7 +1221,7 @@
             </div>
             <div class="item">
               <div class="img-wrap">
-                <img src="//jovs.com/cdn/shop/files/BA_Mask_02.jpg?v=1758461622" alt="Skin Firming results" loading="lazy" decoding="async">
+                <img src="https://jovs.com/cdn/shop/files/BA_Mask_02.jpg?v=1758461622" alt="Skin Firming results" width="600" height="360" loading="lazy" decoding="async">
               </div>
               <p class="tit">
                 Skin Firming
@@ -796,7 +1233,7 @@
             </div>
             <div class="item">
               <div class="img-wrap">
-                <img src="//jovs.com/cdn/shop/files/BA_Mask_03.jpg?v=1758461622" alt="Radiance and Glow results" loading="lazy" decoding="async">
+                <img src="https://jovs.com/cdn/shop/files/BA_Mask_03.jpg?v=1758461622" alt="Radiance and Glow results" width="600" height="360" loading="lazy" decoding="async">
               </div>
               <p class="tit">
                 Radiance &amp; Glow
@@ -809,7 +1246,7 @@
           <div class="swiper-slide">
             <div class="item">
               <div class="img-wrap">
-                <img src="//jovs.com/cdn/shop/files/BA_JW1_01.jpg?v=1758462178" alt="Lift and Sculpt results" loading="lazy" decoding="async">
+                <img src="https://jovs.com/cdn/shop/files/BA_JW1_01.jpg?v=1758462178" alt="Lift and Sculpt results" width="600" height="360" loading="lazy" decoding="async">
               </div>
               <p class="tit">
                 Lift &amp; Sculpt
@@ -820,7 +1257,7 @@
             </div>
             <div class="item">
               <div class="img-wrap">
-                <img src="//jovs.com/cdn/shop/files/BA_JW1_02.jpg?v=1758462179" alt="Smooth and Firm results" loading="lazy" decoding="async">
+                <img src="https://jovs.com/cdn/shop/files/BA_JW1_02.jpg?v=1758462179" alt="Smooth and Firm results" width="600" height="360" loading="lazy" decoding="async">
               </div>
               <p class="tit">
                 Smooth &amp; Firm
@@ -832,7 +1269,7 @@
 
             <div class="item">
               <div class="img-wrap">
-                <img src="//jovs.com/cdn/shop/files/BA_JW1_03.jpg?v=1758462179" alt="Bye Cellulite results" loading="lazy" decoding="async">
+                <img src="https://jovs.com/cdn/shop/files/BA_JW1_03.jpg?v=1758462179" alt="Bye Cellulite results" width="600" height="360" loading="lazy" decoding="async">
               </div>
               <p class="tit">
                 Bye Cellulite
@@ -846,7 +1283,7 @@
           <div class="swiper-slide">
             <div class="item">
               <div class="img-wrap">
-                <img src="//jovs.com/cdn/shop/files/BA_JR5E_03.jpg?v=1758463078" alt="Underarms hair removal results" loading="lazy" decoding="async">
+                <img src="https://jovs.com/cdn/shop/files/BA_JR5E_03.jpg?v=1758463078" alt="Underarms hair removal results" width="600" height="360" loading="lazy" decoding="async">
               </div>
               <p class="tit">
                 Underarms
@@ -857,7 +1294,7 @@
             </div>
             <div class="item">
               <div class="img-wrap">
-                <img src="//jovs.com/cdn/shop/files/BA_JR5E_02.jpg?v=1758463078" alt="Bikini Area hair removal results" loading="lazy" decoding="async">
+                <img src="https://jovs.com/cdn/shop/files/BA_JR5E_02.jpg?v=1758463078" alt="Bikini Area hair removal results" width="600" height="360" loading="lazy" decoding="async">
               </div>
               <p class="tit">
                 Bikini Area
@@ -868,7 +1305,7 @@
             </div>
             <div class="item">
               <div class="img-wrap">
-                <img src="//jovs.com/cdn/shop/files/BA_JR5E_01.jpg?v=1758463078" alt="Legs hair removal results" loading="lazy" decoding="async">
+                <img src="https://jovs.com/cdn/shop/files/BA_JR5E_01.jpg?v=1758463078" alt="Legs hair removal results" width="600" height="360" loading="lazy" decoding="async">
               </div>
               <p class="tit">
                 Legs
@@ -881,7 +1318,7 @@
           <div class="swiper-slide">
             <div class="item">
               <div class="img-wrap">
-                <img src="//jovs.com/cdn/shop/files/BA_JP1_P_01.jpg?v=1758464196" alt="Dark Spot Reduction results" loading="lazy" decoding="async">
+                <img src="https://jovs.com/cdn/shop/files/BA_JP1_P_01.jpg?v=1758464196" alt="Dark Spot Reduction results" width="600" height="360" loading="lazy" decoding="async">
               </div>
               <p class="tit">
                 Dark Spot Reduction
@@ -893,7 +1330,7 @@
             </div>
             <div class="item">
               <div class="img-wrap">
-                <img src="//jovs.com/cdn/shop/files/BA_JP1_P_02.jpg?v=1758464196" alt="Skin Firming and Radiance results" loading="lazy" decoding="async">
+                <img src="https://jovs.com/cdn/shop/files/BA_JP1_P_02.jpg?v=1758464196" alt="Skin Firming and Radiance results" width="600" height="360" loading="lazy" decoding="async">
               </div>
               <p class="tit">
                 Skin Firming &amp; Radiance
@@ -905,7 +1342,7 @@
             </div>
             <div class="item">
               <div class="img-wrap">
-                <img src="//jovs.com/cdn/shop/files/BA_JP1_P_03.jpg?v=1758464196" alt="Acne and Blemish Control results" loading="lazy" decoding="async">
+                <img src="https://jovs.com/cdn/shop/files/BA_JP1_P_03.jpg?v=1758464196" alt="Acne and Blemish Control results" width="600" height="360" loading="lazy" decoding="async">
               </div>
               <p class="tit">
                 Acne &amp; Blemish Control
@@ -925,7 +1362,7 @@
       <p class="section-des">Discover the latest in beauty technology</p>
       <div class="content-wrap">
         <div class="item is-active">
-          <img src="//jovs.com/cdn/shop/files/Group_158_1.png?v=1757574117&width=1200" alt="EMS-Toning Shorts" loading="lazy" decoding="async">
+          <img src="https://jovs.com/cdn/shop/files/Group_158_1.png?v=1757574117&width=1200" alt="EMS-Toning Shorts" loading="lazy" decoding="async">
           <div class="item-content">
 
             <div class="text-wrap">
@@ -933,7 +1370,7 @@
               <p class="des">Non-invasive EMS shorts designed to lift, tone</p>
             </div>
             <a href="/products/jovs-ems-shorts-for-pelvic-floor-training" class="bottom-img-wrap">
-              <img src="//jovs.com/cdn/shop/files/03_3.png?v=1757574538&width=400" alt="EMS-Toning Shorts" loading="lazy" decoding="async">
+              <img src="https://jovs.com/cdn/shop/files/03_3.png?v=1757574538&width=400" alt="EMS-Toning Shorts" width="107" height="99" loading="lazy" decoding="async">
               <p class="bottom-des">EMS-Toning Shorts</p>
             </a>
           </div>
@@ -944,7 +1381,7 @@
         </div>
         <div class="item">
           <img
-            src="//jovs.com/cdn/shop/files/Mask_group_6_53faf754-806e-4404-860e-120142b01f39.png?v=1758267508&width=1200"
+            src="https://jovs.com/cdn/shop/files/Mask_group_6_53faf754-806e-4404-860e-120142b01f39.png?v=1758267508&width=1200"
             alt="JOVS EMS-Lifting Mask" loading="lazy" decoding="async">
           <div class="item-content">
 
@@ -953,8 +1390,8 @@
               <p class="des">Enhance your skin, revealing a brighter, more youthful look.</p>
             </div>
             <a href="/products/ems-lifting-mask" class="bottom-img-wrap">
-              <img src="//jovs.com/cdn/shop/files/b3b0748556068a52231497c22fd81c91.png?v=1758267578&width=400"
-                alt="EMS-Toning Shorts" loading="lazy" decoding="async">
+              <img src="https://jovs.com/cdn/shop/files/b3b0748556068a52231497c22fd81c91.png?v=1758267578&width=400"
+                alt="EMS-Toning Shorts" width="107" height="99" loading="lazy" decoding="async">
               <p class="bottom-des">EMS-Toning Shorts</p>
             </a>
           </div>
@@ -974,7 +1411,7 @@
         <div class="swiper-wrapper">
           <div class="swiper-slide">
             <div class="img-wrap">
-              <img src="//jovs.com/cdn/shop/files/Mask_group_1_75724b25-3992-4dad-8f6b-05a1833a5ed6.png?v=1758601389"
+              <img src="https://jovs.com/cdn/shop/files/Mask_group_1_75724b25-3992-4dad-8f6b-05a1833a5ed6.png?v=1758601389"
                 alt="Anti-Aging" loading="lazy" decoding="async">
             </div>
             <div class="text-wrap">
@@ -991,7 +1428,7 @@
           </div>
           <div class="swiper-slide">
             <div class="img-wrap">
-              <img src="//jovs.com/cdn/shop/files/Mask_group_2_ed7dfb2e-0e93-401e-9ca7-3faf9977b9c4.png?v=1758267018"
+              <img src="https://jovs.com/cdn/shop/files/Mask_group_2_ed7dfb2e-0e93-401e-9ca7-3faf9977b9c4.png?v=1758267018"
                 alt="Body Shaping" loading="lazy" decoding="async">
             </div>
             <div class="text-wrap">
@@ -1007,7 +1444,7 @@
           </div>
           <div class="swiper-slide">
             <div class="img-wrap">
-              <img src="//jovs.com/cdn/shop/files/Mask_group_2_ad497b94-4a9e-42c7-9d5e-ac5513ae67b3.png?v=1758601387"
+              <img src="https://jovs.com/cdn/shop/files/Mask_group_2_ad497b94-4a9e-42c7-9d5e-ac5513ae67b3.png?v=1758601387"
                 alt="Hyperpigmentation" loading="lazy" decoding="async">
             </div>
             <div class="text-wrap">
@@ -1023,7 +1460,7 @@
           </div>
           <div class="swiper-slide">
             <div class="img-wrap">
-              <img src="//jovs.com/cdn/shop/files/Mask_group-3_25530fd3-da63-4440-adbe-e41134a6c599.png?v=1757844563"
+              <img src="https://jovs.com/cdn/shop/files/Mask_group-3_25530fd3-da63-4440-adbe-e41134a6c599.png?v=1757844563"
                 alt="Hair Removal" loading="lazy" decoding="async">
             </div>
             <div class="text-wrap">
@@ -1039,7 +1476,7 @@
           </div>
           <div class="swiper-slide">
             <div class="img-wrap">
-              <img src="//jovs.com/cdn/shop/files/Mask_group_3_770f74ca-2611-4dcb-9fb6-6a1f797d2394.png?v=1758267018"
+              <img src="https://jovs.com/cdn/shop/files/Mask_group_3_770f74ca-2611-4dcb-9fb6-6a1f797d2394.png?v=1758267018"
                 alt="Acne &amp; Spots" loading="lazy" decoding="async">
             </div>
             <div class="text-wrap">
@@ -1093,8 +1530,8 @@
           <div class="item swiper-slide">
             <div class="avator">
               <img
-                src="//jovs.com/cdn/shop/files/Mask_group-1_aeb244c5-7711-4be9-adbd-7c1cc68d713c.png?v=1757844163&width=500"
-                alt="Portrait of Dr. Mike" loading="lazy" decoding="async">
+                src="https://jovs.com/cdn/shop/files/Mask_group-1_aeb244c5-7711-4be9-adbd-7c1cc68d713c.png?v=1757844163&width=500"
+                alt="Portrait of Dr. Mike" width="110" height="110" loading="lazy" decoding="async">
             </div>
             <div class="text-wrap">
               <p class="tit">
@@ -1109,8 +1546,8 @@
           <div class="item swiper-slide">
             <div class="avator">
               <img
-                src="//jovs.com/cdn/shop/files/Mask_group_8272ef74-9acb-4469-a8fa-51e6caa3f918.png?v=1757844163&width=500"
-                alt="Portrait of Dr. Sara" loading="lazy" decoding="async">
+                src="https://jovs.com/cdn/shop/files/Mask_group_8272ef74-9acb-4469-a8fa-51e6caa3f918.png?v=1757844163&width=500"
+                alt="Portrait of Dr. Sara" width="110" height="110" loading="lazy" decoding="async">
             </div>
             <div class="text-wrap">
               <p class="tit">
@@ -1125,8 +1562,8 @@
           <div class="item swiper-slide">
             <div class="avator">
               <img
-                src="//jovs.com/cdn/shop/files/Mask_group-2_d40e2e9d-45fb-4730-98b8-c30932480a6f.png?v=1757844163&width=500"
-                alt="Portrait of Dr. Emily" loading="lazy" decoding="async">
+                src="https://jovs.com/cdn/shop/files/Mask_group-2_d40e2e9d-45fb-4730-98b8-c30932480a6f.png?v=1757844163&width=500"
+                alt="Portrait of Dr. Emily" width="110" height="110" loading="lazy" decoding="async">
             </div>
             <div class="text-wrap">
               <p class="tit">
@@ -1181,10 +1618,10 @@
               <div class="video-wrap">
                 <video controls muted loop preload="metadata">
                   <source
-                    src="//jovs.com/cdn/shop/videos/c/vp/71bdf0fe51c5493382fc83851a544024/71bdf0fe51c5493382fc83851a544024.m3u8?v=0"
+                    src="https://jovs.com/cdn/shop/videos/c/vp/71bdf0fe51c5493382fc83851a544024/71bdf0fe51c5493382fc83851a544024.m3u8?v=0"
                     type="application/x-mpegURL">
                   <source
-                    src="//jovs.com/cdn/shop/videos/c/vp/71bdf0fe51c5493382fc83851a544024/71bdf0fe51c5493382fc83851a544024.HD-1080p-2.5Mbps-56052222.mp4?v=0"
+                    src="https://jovs.com/cdn/shop/videos/c/vp/71bdf0fe51c5493382fc83851a544024/71bdf0fe51c5493382fc83851a544024.HD-1080p-2.5Mbps-56052222.mp4?v=0"
                     type="video/mp4">
                 </video>
               </div>
@@ -1193,10 +1630,10 @@
               <div class="video-wrap">
                 <video controls muted loop preload="metadata">
                   <source
-                    src="//jovs.com/cdn/shop/videos/c/vp/bd92ad85c49e4097a043c880b2651e3a/bd92ad85c49e4097a043c880b2651e3a.m3u8?v=0"
+                    src="https://jovs.com/cdn/shop/videos/c/vp/bd92ad85c49e4097a043c880b2651e3a/bd92ad85c49e4097a043c880b2651e3a.m3u8?v=0"
                     type="application/x-mpegURL">
                   <source
-                    src="//jovs.com/cdn/shop/videos/c/vp/bd92ad85c49e4097a043c880b2651e3a/bd92ad85c49e4097a043c880b2651e3a.HD-1080p-2.5Mbps-56052196.mp4?v=0"
+                    src="https://jovs.com/cdn/shop/videos/c/vp/bd92ad85c49e4097a043c880b2651e3a/bd92ad85c49e4097a043c880b2651e3a.HD-1080p-2.5Mbps-56052196.mp4?v=0"
                     type="video/mp4">
                 </video>
               </div>
@@ -1205,10 +1642,10 @@
               <div class="video-wrap">
                 <video controls muted loop preload="metadata">
                   <source
-                    src="//jovs.com/cdn/shop/videos/c/vp/a4cc07444dd14d80924fedc6c01cef2c/a4cc07444dd14d80924fedc6c01cef2c.m3u8?v=0"
+                    src="https://jovs.com/cdn/shop/videos/c/vp/a4cc07444dd14d80924fedc6c01cef2c/a4cc07444dd14d80924fedc6c01cef2c.m3u8?v=0"
                     type="application/x-mpegURL">
                   <source
-                    src="//jovs.com/cdn/shop/videos/c/vp/a4cc07444dd14d80924fedc6c01cef2c/a4cc07444dd14d80924fedc6c01cef2c.HD-1080p-2.5Mbps-54972053.mp4?v=0"
+                    src="https://jovs.com/cdn/shop/videos/c/vp/a4cc07444dd14d80924fedc6c01cef2c/a4cc07444dd14d80924fedc6c01cef2c.HD-1080p-2.5Mbps-54972053.mp4?v=0"
                     type="video/mp4">
                 </video>
               </div>
@@ -1217,10 +1654,10 @@
               <div class="video-wrap">
                 <video controls muted loop preload="metadata">
                   <source
-                    src="//jovs.com/cdn/shop/videos/c/vp/de09f62b27434a209dc310f027d45d7a/de09f62b27434a209dc310f027d45d7a.m3u8?v=0"
+                    src="https://jovs.com/cdn/shop/videos/c/vp/de09f62b27434a209dc310f027d45d7a/de09f62b27434a209dc310f027d45d7a.m3u8?v=0"
                     type="application/x-mpegURL">
                   <source
-                    src="//jovs.com/cdn/shop/videos/c/vp/de09f62b27434a209dc310f027d45d7a/de09f62b27434a209dc310f027d45d7a.HD-1080p-2.5Mbps-54971554.mp4?v=0"
+                    src="https://jovs.com/cdn/shop/videos/c/vp/de09f62b27434a209dc310f027d45d7a/de09f62b27434a209dc310f027d45d7a.HD-1080p-2.5Mbps-54971554.mp4?v=0"
                     type="video/mp4">
                 </video>
               </div>
@@ -1229,10 +1666,10 @@
               <div class="video-wrap">
                 <video controls muted loop preload="metadata">
                   <source
-                    src="//jovs.com/cdn/shop/videos/c/vp/9def66927c544d0caf3967496de074b8/9def66927c544d0caf3967496de074b8.m3u8?v=0"
+                    src="https://jovs.com/cdn/shop/videos/c/vp/9def66927c544d0caf3967496de074b8/9def66927c544d0caf3967496de074b8.m3u8?v=0"
                     type="application/x-mpegURL">
                   <source
-                    src="//jovs.com/cdn/shop/videos/c/vp/9def66927c544d0caf3967496de074b8/9def66927c544d0caf3967496de074b8.HD-1080p-2.5Mbps-56051301.mp4?v=0"
+                    src="https://jovs.com/cdn/shop/videos/c/vp/9def66927c544d0caf3967496de074b8/9def66927c544d0caf3967496de074b8.HD-1080p-2.5Mbps-56051301.mp4?v=0"
                     type="video/mp4">
                 </video>
               </div>
@@ -1255,43 +1692,43 @@
               <div class="item-mask">
                 <video class="mw-100" controls="" muted="" loop="" preload="metadata">
                   <source
-                    src="//jovs.com/cdn/shop/videos/c/vp/a553bfc80b934f06adb0eff20e0b2efe/a553bfc80b934f06adb0eff20e0b2efe.m3u8?v=0"
+                    src="https://jovs.com/cdn/shop/videos/c/vp/a553bfc80b934f06adb0eff20e0b2efe/a553bfc80b934f06adb0eff20e0b2efe.m3u8?v=0"
                     type="application/x-mpegURL">
                   <source
-                    src="//jovs.com/cdn/shop/videos/c/vp/a553bfc80b934f06adb0eff20e0b2efe/a553bfc80b934f06adb0eff20e0b2efe.HD-1080p-3.3Mbps-49449754.mp4?v=0"
+                    src="https://jovs.com/cdn/shop/videos/c/vp/a553bfc80b934f06adb0eff20e0b2efe/a553bfc80b934f06adb0eff20e0b2efe.HD-1080p-3.3Mbps-49449754.mp4?v=0"
                     type="video/mp4">
                 </video>
               </div>
             </div>
             <div class="item swiper-slide">
               <div class="item-mask">
-                <img src="//jovs.com/cdn/shop/files/PixPin_2025-09-17_16-16-09.png?v=1758097006&width=1920"
-                  alt="Our Philosophy" loading="lazy" decoding="async" />
+                <img src="https://jovs.com/cdn/shop/files/PixPin_2025-09-17_16-16-09.png?v=1758097006&width=1920"
+                  alt="Our Philosophy" width="660" height="362" loading="lazy" decoding="async" />
               </div>
             </div>
             <div class="item swiper-slide">
               <div class="item-mask">
                 <img
-                  src="//jovs.com/cdn/shop/files/gempages_467972552174601095-0d63196d-838e-4e4c-90e0-eb5624070f39.webp?v=1758276399&amp;width=1920"
-                  alt="Our Approach" loading="lazy" plerdy-tracking-id="14613778201" decoding="async">
+                  src="https://jovs.com/cdn/shop/files/gempages_467972552174601095-0d63196d-838e-4e4c-90e0-eb5624070f39.webp?v=1758276399&amp;width=1920"
+                  alt="Our Approach" width="660" height="362" loading="lazy" plerdy-tracking-id="14613778201" decoding="async">
               </div>
             </div>
             <div class="item swiper-slide">
               <div class="item-mask">
-                <img src="//jovs.com/cdn/shop/files/PixPin_2025-09-17_16-10-04.png?v=1758096619&amp;width=1920"
-                  alt="Global Vision" loading="lazy" plerdy-tracking-id="66159129601" decoding="async">
+                <img src="https://jovs.com/cdn/shop/files/PixPin_2025-09-17_16-10-04.png?v=1758096619&amp;width=1920"
+                  alt="Global Vision" width="660" height="362" loading="lazy" plerdy-tracking-id="66159129601" decoding="async">
               </div>
             </div>
             <div class="item swiper-slide">
               <div class="item-mask">
-                <img src="//jovs.com/cdn/shop/files/Mask_group4.webp?v=1756275560&width=1920" alt="Our Story"
-                  loading="lazy" decoding="async" />
+                <img src="https://jovs.com/cdn/shop/files/Mask_group4.webp?v=1756275560&width=1920" alt="Our Story"
+                  width="660" height="362" loading="lazy" decoding="async" />
               </div>
             </div>
             <div class="item swiper-slide">
               <div class="item-mask">
-                <img src="//jovs.com/cdn/shop/files/PixPin_2025-09-17_16-16-09.png?v=1758097006&width=1920"
-                  alt="Our Philosophy" loading="lazy" decoding="async" />
+                <img src="https://jovs.com/cdn/shop/files/PixPin_2025-09-17_16-16-09.png?v=1758097006&width=1920"
+                  alt="Our Philosophy" width="660" height="362" loading="lazy" decoding="async" />
               </div>
             </div>
           </div>
@@ -1302,8 +1739,8 @@
               <div class="item swiper-slide">
                 <div class="d-flex align-items-center gap-15">
                   <div class="img-wrap">
-                    <img src="//jovs.com/cdn/shop/files/Mask_group4.webp?v=1756275560&amp;width=300" alt="Our Story"
-                      loading="lazy" plerdy-tracking-id="65265963401" decoding="async">
+                    <img src="https://jovs.com/cdn/shop/files/Mask_group4.webp?v=1756275560&amp;width=300" alt="Our Story"
+                      width="154" height="120" loading="lazy" plerdy-tracking-id="65265963401" decoding="async">
                   </div>
                   <div class="text-wrap">
                     <p class="common-tit">Our Story</p>
@@ -1316,8 +1753,8 @@
               <div class="item swiper-slide">
                 <div class="d-flex align-items-center gap-15">
                   <div class="img-wrap">
-                    <img src="//jovs.com/cdn/shop/files/PixPin_2025-09-17_16-16-09.png?v=1758097006&amp;width=300"
-                      alt="Our Philosophy" loading="lazy" plerdy-tracking-id="88882716301" decoding="async">
+                    <img src="https://jovs.com/cdn/shop/files/PixPin_2025-09-17_16-16-09.png?v=1758097006&amp;width=300"
+                      alt="Our Philosophy" width="154" height="120" loading="lazy" plerdy-tracking-id="88882716301" decoding="async">
                   </div>
                   <div class="text-wrap">
                     <p class="common-tit">Our Philosophy</p>
@@ -1330,8 +1767,8 @@
                 <div class="d-flex align-items-center gap-15">
                   <div class="img-wrap">
                     <img
-                      src="//jovs.com/cdn/shop/files/gempages_467972552174601095-0d63196d-838e-4e4c-90e0-eb5624070f39.webp?v=1758276399&amp;width=300"
-                      alt="Our Approach" loading="lazy" plerdy-tracking-id="79769780701" decoding="async">
+                      src="https://jovs.com/cdn/shop/files/gempages_467972552174601095-0d63196d-838e-4e4c-90e0-eb5624070f39.webp?v=1758276399&amp;width=300"
+                      alt="Our Approach" width="154" height="120" loading="lazy" plerdy-tracking-id="79769780701" decoding="async">
                   </div>
                   <div class="text-wrap">
                     <p class="common-tit">Our Approach</p>
@@ -1343,8 +1780,8 @@
               <div class="item swiper-slide">
                 <div class="d-flex align-items-center gap-15">
                   <div class="img-wrap">
-                    <img src="//jovs.com/cdn/shop/files/PixPin_2025-09-17_16-10-04.png?v=1758096619&amp;width=300"
-                      alt="Global Vision" loading="lazy" plerdy-tracking-id="86283151301" decoding="async">
+                    <img src="https://jovs.com/cdn/shop/files/PixPin_2025-09-17_16-10-04.png?v=1758096619&amp;width=300"
+                      alt="Global Vision" width="154" height="120" loading="lazy" plerdy-tracking-id="86283151301" decoding="async">
                   </div>
                   <div class="text-wrap">
                     <p class="common-tit">Global Vision</p>
@@ -1387,7 +1824,7 @@
       <div class="content-wrap d-flex ">
         <div class="item d-flex align-items-center gap-20">
           <div class="icon-wrap">
-            <img src="//jovs.com/cdn/shop/files/1_19572017-0978-425e-a7c4-5ade0c0b48a6.png?v=1758267216&amp;width=100"
+            <img src="https://jovs.com/cdn/shop/files/1_19572017-0978-425e-a7c4-5ade0c0b48a6.png?v=1758267216&amp;width=100"
               alt="60-Day Returns icon" width="100" height="100" loading="lazy" decoding="async">
           </div>
           <div class="text-wrap">
@@ -1397,7 +1834,7 @@
         </div>
         <div class="item d-flex align-items-center gap-20">
           <div class="icon-wrap">
-            <img src="//jovs.com/cdn/shop/files/2_1_be8c3aa7-7480-42e9-b0b9-89e1e6bf51d2.png?v=1758267216&amp;width=100"
+            <img src="https://jovs.com/cdn/shop/files/2_1_be8c3aa7-7480-42e9-b0b9-89e1e6bf51d2.png?v=1758267216&amp;width=100"
               alt="Worldwide Shipping icon" width="100" height="100" loading="lazy" decoding="async">
           </div>
           <div class="text-wrap">
@@ -1407,7 +1844,7 @@
         </div>
         <div class="item d-flex align-items-center gap-20">
           <div class="icon-wrap">
-            <img src="//jovs.com/cdn/shop/files/2_1.png?v=1758267216&amp;width=100" alt="1-Year Warranty icon" width="100" height="100" loading="lazy"
+            <img src="https://jovs.com/cdn/shop/files/2_1.png?v=1758267216&amp;width=100" alt="1-Year Warranty icon" width="100" height="100" loading="lazy"
               plerdy-tracking-id="59077962601" decoding="async">
           </div>
           <div class="text-wrap">
@@ -1417,7 +1854,7 @@
         </div>
         <div class="item d-flex align-items-center gap-20">
           <div class="icon-wrap">
-            <img src="//jovs.com/cdn/shop/files/1_b364af95-bd74-4578-b74e-f8cdc491815f.png?v=1758267216&amp;width=100"
+            <img src="https://jovs.com/cdn/shop/files/1_b364af95-bd74-4578-b74e-f8cdc491815f.png?v=1758267216&amp;width=100"
               alt="24/7 Support icon" width="100" height="100" loading="lazy" plerdy-tracking-id="48200659801" decoding="async">
           </div>
           <div class="text-wrap">
@@ -1445,9 +1882,9 @@
             <div class="item swiper-slide">
               <div class="img-wrap">
                 <img
-                  src="//jovs.com/cdn/shop/articles/ipl-removal_98ccfdef-1a24-4e4f-81e5-1123a53c6577.webp?v=1773145544&amp;width=800"
+                  src="https://jovs.com/cdn/shop/articles/ipl-removal_98ccfdef-1a24-4e4f-81e5-1123a53c6577.webp?v=1773145544&amp;width=800"
                   class="thumb" alt="Venus Pro II IPL Hair Removal: Complete Review, Results, and How It Works"
-                  loading="lazy" decoding="async">
+                  width="310" height="220" loading="lazy" decoding="async">
               </div>
               <div class="text-wrap">
                 <p class="data common-des">
@@ -1464,8 +1901,8 @@
             <div class="item swiper-slide">
               <div class="img-wrap">
                 <img
-                  src="//jovs.com/cdn/shop/articles/Featured_Image_50d42def-a132-48f5-89d8-ae15d72bdc98.webp?v=1772704048&amp;width=800"
-                  class="thumb" alt="What Kind of Light Therapy Can Work for Depression" loading="lazy" decoding="async">
+                  src="https://jovs.com/cdn/shop/articles/Featured_Image_50d42def-a132-48f5-89d8-ae15d72bdc98.webp?v=1772704048&amp;width=800"
+                  class="thumb" alt="What Kind of Light Therapy Can Work for Depression" width="310" height="220" loading="lazy" decoding="async">
               </div>
               <div class="text-wrap">
                 <p class="data common-des">
@@ -1481,8 +1918,8 @@
             <div class="item swiper-slide">
               <div class="img-wrap">
                 <img
-                  src="//jovs.com/cdn/shop/articles/anxiety-relief-cover_6a6eb501-33f1-41f7-8b00-d4901a4b5497.webp?v=1772608496&amp;width=800"
-                  class="thumb" alt="How to Achieve Stress and Anxiety Relief Naturally by Yourself" loading="lazy" decoding="async">
+                  src="https://jovs.com/cdn/shop/articles/anxiety-relief-cover_6a6eb501-33f1-41f7-8b00-d4901a4b5497.webp?v=1772608496&amp;width=800"
+                  class="thumb" alt="How to Achieve Stress and Anxiety Relief Naturally by Yourself" width="310" height="220" loading="lazy" decoding="async">
               </div>
               <div class="text-wrap">
                 <p class="data common-des">
@@ -1498,8 +1935,8 @@
             <div class="item swiper-slide">
               <div class="img-wrap">
                 <img
-                  src="//jovs.com/cdn/shop/articles/Feature_Image_fa3d838a-6e83-446f-a3d0-83756226f735.webp?v=1772430308&amp;width=800"
-                  class="thumb" alt="What Is Skin Flushing? Causes, Symptoms, and When to Be Concerned" loading="lazy" decoding="async">
+                  src="https://jovs.com/cdn/shop/articles/Feature_Image_fa3d838a-6e83-446f-a3d0-83756226f735.webp?v=1772430308&amp;width=800"
+                  class="thumb" alt="What Is Skin Flushing? Causes, Symptoms, and When to Be Concerned" width="310" height="220" loading="lazy" decoding="async">
               </div>
               <div class="text-wrap">
                 <p class="data common-des">
@@ -1515,9 +1952,9 @@
             <div class="item swiper-slide">
               <div class="img-wrap">
                 <img
-                  src="//jovs.com/cdn/shop/articles/Feature_Image_4165266d-303c-4b9d-9589-3415b16edf58.webp?v=1772423979&amp;width=800"
+                  src="https://jovs.com/cdn/shop/articles/Feature_Image_4165266d-303c-4b9d-9589-3415b16edf58.webp?v=1772423979&amp;width=800"
                   class="thumb" alt="Skincare for Redness: Best Treatments for Facial Redness on Nose and Cheeks"
-                  loading="lazy" decoding="async">
+                  width="310" height="220" loading="lazy" decoding="async">
               </div>
               <div class="text-wrap">
                 <p class="data common-des">
@@ -1533,8 +1970,8 @@
             <div class="item swiper-slide">
               <div class="img-wrap">
                 <img
-                  src="//jovs.com/cdn/shop/articles/UV_light_40f66fac-224c-4bfd-b60e-89042b00bd1f.webp?v=1772423602&amp;width=800"
-                  class="thumb" alt="What Is UV Light Therapy (UV Phototherapy)?" loading="lazy" decoding="async">
+                  src="https://jovs.com/cdn/shop/articles/UV_light_40f66fac-224c-4bfd-b60e-89042b00bd1f.webp?v=1772423602&amp;width=800"
+                  class="thumb" alt="What Is UV Light Therapy (UV Phototherapy)?" width="310" height="220" loading="lazy" decoding="async">
               </div>
               <div class="text-wrap">
                 <p class="data common-des">
