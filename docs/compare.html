@@ -411,14 +411,11 @@
       <header class="compare-hero">
         <span class="compare-kicker">重构收益对比</span>
         <h1 class="compare-title">首页重构前后优化对比</h1>
-        <p class="compare-desc">
-          这个页面不是展示视觉差异，而是集中说明这次首页重构在性能、SEO、可访问性和维护性上的改善。适合直接拿去做内部汇报，或者给甲方解释“这次重构除了改样式，还带来了什么实际收益”。
-        </p>
+      
         <div class="compare-meta">
           <span class="compare-badge">对比基线：hovs.html vs home.html</span>
           <span class="compare-badge">已确认数据 + 已完成优化</span>
-          <span class="compare-badge">Lighthouse 实测分数可后续补充</span>
-        </div>
+         </div>
       </header>
 
       <section class="compare-grid-4">
@@ -461,61 +458,22 @@
 
       <section class="compare-grid-2">
         <article class="compare-score-card">
-          <h2>建议补充的实测分数</h2>
-          <p>这部分适合后续把 Lighthouse 或真实 Web Vitals 数据补进来。现在先保留汇报结构，避免把“代码层明确改善”和“线上实测结果”混在一起。</p>
-          <div class="compare-score-row">
-            <div class="compare-score-item">
-              <div class="compare-score-label">
-                <span>Performance</span>
-                <span class="compare-score-status">待实测</span>
-              </div>
-              <div class="compare-score-value">-- <span class="compare-score-value-muted">可填写 Before / After 分数</span></div>
-            </div>
-            <div class="compare-score-item">
-              <div class="compare-score-label">
-                <span>SEO</span>
-                <span class="compare-score-status">待实测</span>
-              </div>
-              <div class="compare-score-value">-- <span class="compare-score-value-muted">建议补线上 Lighthouse</span></div>
-            </div>
-            <div class="compare-score-item">
-              <div class="compare-score-label">
-                <span>Accessibility</span>
-                <span class="compare-score-status">待实测</span>
-              </div>
-              <div class="compare-score-value">-- <span class="compare-score-value-muted">可补读屏和键盘走查</span></div>
-            </div>
-            <div class="compare-score-item">
-              <div class="compare-score-label">
-                <span>Best Practices</span>
-                <span class="compare-score-status">待实测</span>
-              </div>
-              <div class="compare-score-value">-- <span class="compare-score-value-muted">建议补生产环境分数</span></div>
-            </div>
-          </div>
+          <span class="compare-summary-value">google /pagespeed 评分，在最原始状态下能有一个很好的评分</span>
+         <img src="../images/google-pagetest-after-mb.png" alt="">
+         <img src="../images/google-pagetest-after-pc.png" alt="">
         </article>
 
+       
         <article class="compare-score-card">
-          <h2>这页最适合怎么用</h2>
-          <p>如果你要对外说明，本页建议重点讲“代码结构更轻、首屏加载更稳、SEO 基础不被破坏、后续更容易维护”。这样比只说“改了几个样式”更容易让人理解重构价值。</p>
-          <div class="compare-score-row">
-            <div class="compare-score-item">
-              <div class="compare-score-label">
-                <span>适合汇报的对象</span>
-                <span class="compare-score-status">已整理</span>
-              </div>
-              <div class="compare-score-value">甲方 / 产品 / 运营 / 开发</div>
-            </div>
-            <div class="compare-score-item">
-              <div class="compare-score-label">
-                <span>建议重点话术</span>
-                <span class="compare-score-status">通俗版本</span>
-              </div>
-              <div class="compare-score-value">更快出来，更少跳动，更稳，更好维护</div>
-            </div>
-          </div>
+        <span class="compare-summary-value">已优化线上存在交互及样式问题</span>
+        <h2 class="">交互偶发无法收缩</h2>
+        <img width="425" src="../images/bugimg-pc-1.PNG" alt="">
+        <h2 style="margin-top: 24px;">图片固定高度，拉伸宽度导致展示比例不对</h2>
+        <img width="425" src="../images/bugimg-pc-2.PNG" alt="">
+        <h2 style="margin-top: 24px;">交互问题，没有明显激活状态</h2>
+        <img width="425" src="../images/bugimg-pc-3.PNG" alt="">
         </article>
-      </section>
+      </div>
 
       <section class="compare-section">
         <div class="compare-section-title">
@@ -550,12 +508,7 @@
                 </td>
                 <td>首屏关键样式已内联，完整样式改为非阻塞加载，减少首屏等待。</td>
               </tr>
-              <tr>
-                <td class="compare-col-title">图片数量</td>
-                <td class="compare-col-before">232</td>
-                <td class="compare-col-after">81</td>
-                <td>这里反映的是当前本地页面层资源体量，便于说明重构页结构更聚焦。</td>
-              </tr>
+             
               <tr>
                 <td class="compare-col-title">Swiper 初始化</td>
                 <td class="compare-col-before">17</td>
@@ -647,7 +600,7 @@
 
       <section class="compare-grid-2">
         <article class="compare-section">
-          <h2>对甲方最容易理解的价值</h2>
+          <h2>浅显总结：</h2>
           <ul class="compare-list">
             <li>
               <strong>页面更快进入可读状态</strong>
@@ -664,30 +617,10 @@
           </ul>
         </article>
 
-        <article class="compare-section">
-          <h2>建议下一步怎么补强这页</h2>
-          <ul class="compare-list">
-            <li>
-              <strong>补 Lighthouse Before / After 分数</strong>
-              <span>把 Performance、SEO、Accessibility、Best Practices 的分数补进上面的卡片里，汇报会更完整。</span>
-            </li>
-            <li>
-              <strong>补 Web Vitals 实测</strong>
-              <span>如果能拿到真实环境的 LCP、CLS、INP，这页会从“结构优化说明”升级成“结果导向汇报页”。</span>
-            </li>
-            <li>
-              <strong>补第三方脚本审计结果</strong>
-              <span>线上真实性能最大的变量仍然在 Shopify 外层壳和第三方 App，后面补这一块会更有说服力。</span>
-            </li>
-          </ul>
-        </article>
+       
       </section>
 
-      <section class="compare-note">
-        <h2><span class="compare-note-dot" aria-hidden="true"></span>说明边界</h2>
-        <p>这页里的“脚本数量、样式引用、图片策略、Swiper 初始化”等，是当前本地对照下已经可以明确确认的页面层数据。</p>
-        <p>像 Lighthouse 分数、真实 LCP / CLS、线上第三方脚本影响，这些仍建议在生产或准生产环境单独实测后再补上。这样对外表达会更稳，也更不容易被误解成“本地结构优化 = 线上最终分数”。</p>
-      </section>
+     
     </div>
   </main>
 </body>
