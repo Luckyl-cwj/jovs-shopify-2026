@@ -274,7 +274,8 @@ img {
 }
 
 .obj-fit-cover {
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .overflow-hidden {
@@ -1242,6 +1243,4 @@ h2.section-title + .des {
   h2.section-title {
     margin-bottom: var(--space-2);
   }
-}
-
-/*# sourceMappingURL=common-2026.css.map */
+}/*# sourceMappingURL=common-2026.css.map */

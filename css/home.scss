@@ -293,6 +293,10 @@ h2 {
 }
 #section-show-products {
   padding-top: 60px;
+  .content-wrap{
+    margin-top: 40px;
+    
+  }
   .content {
     display: grid;
     grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -404,7 +408,9 @@ h2 {
 
   @media (max-width: 992px) {
     padding-top: 40px;
-
+    .content-wrap{
+      margin-top: 20px;
+    }
     .content {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
