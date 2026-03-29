@@ -1500,37 +1500,43 @@ h2 {
   }
   #section-shop-by-concern .swiper-shop-by-concern {
     margin-top: 24px;
+    overflow: visible;
+  }
+  #section-shop-by-concern .swiper-shop-by-concern .swiper-wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    transform: none !important;
   }
   #section-shop-by-concern .swiper-slide {
-    width: min(76vw, 320px);
-    height: 360px;
+    width: auto;
+    height: auto;
+    aspect-ratio: 1/1.18;
     border-radius: var(--radius-lg);
   }
   #section-shop-by-concern .swiper-slide .text-wrap {
-    left: 20px;
-    right: 20px;
-    bottom: 24px;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
     transform: none;
     width: auto;
     text-align: left;
   }
   #section-shop-by-concern .swiper-slide .text-wrap .tit {
-    font-size: clamp(24px, 7vw, 30px);
-    margin-bottom: 10px;
+    font-size: clamp(18px, 4vw, 24px);
+    margin-bottom: 8px;
   }
   #section-shop-by-concern .swiper-slide .text-wrap a {
-    height: 32px;
-    padding: 0 14px;
-    font-size: 12px;
+    height: 30px;
+    min-width: 0;
+    padding: 0 12px;
+    font-size: 11px;
   }
   #section-shop-by-concern .swiper-slide .dark-overlay {
     opacity: 0.5;
   }
   #section-shop-by-concern .swiper-shop-by-concern-progress {
-    margin-top: 20px;
-  }
-  #section-shop-by-concern .swiper-shop-by-concern-progress .d-flex {
-    justify-content: center !important;
+    display: none;
   }
 }
 @media (max-width: 395px) {
@@ -1540,24 +1546,26 @@ h2 {
   #section-shop-by-concern .swiper-shop-by-concern {
     margin-top: 20px;
   }
+  #section-shop-by-concern .swiper-shop-by-concern .swiper-wrapper {
+    gap: 10px;
+  }
   #section-shop-by-concern .swiper-slide {
-    width: min(82vw, 286px);
-    height: 320px;
+    aspect-ratio: 1/1.12;
     border-radius: var(--radius-md);
   }
   #section-shop-by-concern .swiper-slide .text-wrap {
-    left: 16px;
-    right: 16px;
-    bottom: 18px;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
   }
   #section-shop-by-concern .swiper-slide .text-wrap .tit {
-    font-size: 20px;
-    margin-bottom: 8px;
+    font-size: 16px;
+    margin-bottom: 6px;
   }
   #section-shop-by-concern .swiper-slide .text-wrap a {
-    height: 30px;
-    padding: 0 var(--space-3);
-    font-size: 11px;
+    height: 28px;
+    padding: 0 10px;
+    font-size: 10px;
   }
 }
 

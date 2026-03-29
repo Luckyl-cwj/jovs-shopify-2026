@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JOVS Refactor Comparison</title>
+  <link rel="stylesheet" href="../css/common-2026.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --compare-bg: #f6f3ed;
+      --compare-panel: rgba(255, 255, 255, 0.88);
+      --compare-border: rgba(26, 26, 26, 0.1);
+      --compare-shadow: 0 20px 50px rgba(38, 26, 14, 0.08);
+      --compare-text-strong: #181818;
+      --compare-text-muted: #666;
+      --compare-before: #9b6b42;
+      --compare-before-soft: rgba(155, 107, 66, 0.12);
+      --compare-after: #356a50;
+      --compare-after-soft: rgba(53, 106, 80, 0.12);
+      --compare-neutral: #101010;
+      --compare-neutral-soft: rgba(16, 16, 16, 0.06);
+      --compare-warn: #835d13;
+      --compare-warn-soft: rgba(131, 93, 19, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Instrument Sans", sans-serif;
+      color: var(--compare-text-strong);
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.92), transparent 24%),
+        linear-gradient(180deg, var(--compare-bg) 0%, #fff 360px);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .compare-shell {
+      padding: 32px 0 56px;
+    }
+
+    .compare-hero,
+    .compare-section,
+    .compare-summary-card,
+    .compare-score-card,
+    .compare-note,
+    .compare-metric-table {
+      background: var(--compare-panel);
+      border: 1px solid var(--compare-border);
+      box-shadow: var(--compare-shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .compare-hero,
+    .compare-section,
+    .compare-note,
+    .compare-metric-table {
+      border-radius: 24px;
+      padding: 28px;
+    }
+
+    .compare-kicker {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: var(--compare-neutral);
+      color: #fff;
+      font-size: 12px;
+      line-height: 1;
+    }
+
+    .compare-title {
+      margin: 16px 0 10px;
+      font-size: clamp(30px, 4vw, 48px);
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+    }
+
+    .compare-desc {
+      max-width: 760px;
+      margin: 0;
+      color: var(--compare-text-muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .compare-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .compare-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid var(--compare-border);
+      color: var(--compare-text-muted);
+      font-size: 12px;
+      line-height: 1;
+    }
+
+    .compare-grid-4,
+    .compare-grid-2,
+    .compare-grid-3 {
+      display: grid;
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .compare-summary-card,
+    .compare-score-card {
+      border-radius: 20px;
+      padding: 20px;
+    }
+
+    .compare-summary-card h2,
+    .compare-score-card h2,
+    .compare-section h2,
+    .compare-note h2 {
+      margin: 0 0 12px;
+      font-size: 20px;
+      line-height: 1.2;
+    }
+
+    .compare-summary-card p,
+    .compare-score-card p,
+    .compare-note p {
+      margin: 0;
+      color: var(--compare-text-muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .compare-summary-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .compare-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      line-height: 1;
+    }
+
+    .compare-chip-before {
+      background: var(--compare-before-soft);
+      color: var(--compare-before);
+    }
+
+    .compare-chip-after {
+      background: var(--compare-after-soft);
+      color: var(--compare-after);
+    }
+
+    .compare-summary-value {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 34px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .compare-summary-value small {
+      font-size: 14px;
+      letter-spacing: 0;
+      color: var(--compare-text-muted);
+    }
+
+    .compare-score-row {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .compare-score-item {
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid var(--compare-border);
+    }
+
+    .compare-score-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .compare-score-status {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 0 8px;
+      border-radius: 999px;
+      background: var(--compare-neutral-soft);
+      color: var(--compare-text-muted);
+      font-size: 11px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .compare-score-value {
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+
+    .compare-score-value-muted {
+      color: var(--compare-text-muted);
+      font-size: 14px;
+      letter-spacing: 0;
+    }
+
+    .compare-section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .compare-section-title p {
+      margin: 0;
+      color: var(--compare-text-muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .compare-metric-table {
+      overflow: hidden;
+      padding: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 16px 18px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--compare-border);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    th {
+      background: rgba(255, 255, 255, 0.92);
+      font-size: 12px;
+      color: var(--compare-text-muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .compare-col-title {
+      min-width: 160px;
+      font-weight: 700;
+      color: var(--compare-text-strong);
+    }
+
+    .compare-col-before {
+      background: linear-gradient(180deg, rgba(155, 107, 66, 0.03), transparent);
+    }
+
+    .compare-col-after {
+      background: linear-gradient(180deg, rgba(53, 106, 80, 0.04), transparent);
+    }
+
+    .compare-highlight {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 0 8px;
+      border-radius: 999px;
+      background: var(--compare-after-soft);
+      color: var(--compare-after);
+      font-size: 11px;
+      line-height: 1;
+      margin-top: 8px;
+    }
+
+    .compare-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .compare-list li {
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid var(--compare-border);
+    }
+
+    .compare-list strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    .compare-list span {
+      display: block;
+      color: var(--compare-text-muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .compare-note {
+      margin-top: 20px;
+      border-style: dashed;
+    }
+
+    .compare-note h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .compare-note-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--compare-warn);
+      flex: 0 0 auto;
+    }
+
+    .compare-note p + p {
+      margin-top: 10px;
+    }
+
+    @media (min-width: 992px) {
+      .compare-grid-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .compare-grid-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .compare-grid-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 991.98px) {
+      .compare-shell {
+        padding: 20px 0 40px;
+      }
+
+      .compare-hero,
+      .compare-section,
+      .compare-note {
+        padding: 20px;
+      }
+
+      .compare-summary-value {
+        font-size: 30px;
+      }
+
+      th,
+      td {
+        padding: 14px 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="compare-shell">
+    <div class="container">
+      <header class="compare-hero">
+        <span class="compare-kicker">重构收益对比</span>
+        <h1 class="compare-title">首页重构前后优化对比</h1>
+        <p class="compare-desc">
+          这个页面不是展示视觉差异，而是集中说明这次首页重构在性能、SEO、可访问性和维护性上的改善。适合直接拿去做内部汇报，或者给甲方解释“这次重构除了改样式，还带来了什么实际收益”。
+        </p>
+        <div class="compare-meta">
+          <span class="compare-badge">对比基线：hovs.html vs home.html</span>
+          <span class="compare-badge">已确认数据 + 已完成优化</span>
+          <span class="compare-badge">Lighthouse 实测分数可后续补充</span>
+        </div>
+      </header>
+
+      <section class="compare-grid-4">
+        <article class="compare-summary-card">
+          <div class="compare-summary-top">
+            <h2>脚本复杂度</h2>
+            <span class="compare-chip compare-chip-after">页面更轻</span>
+          </div>
+          <span class="compare-summary-value">114 → 2 <small>script</small></span>
+          <p>展示层自身脚本数量明显下降，首页核心逻辑更集中，后续继续查问题和做优化会更高效。</p>
+        </article>
+
+        <article class="compare-summary-card">
+          <div class="compare-summary-top">
+            <h2>样式依赖</h2>
+            <span class="compare-chip compare-chip-after">更可控</span>
+          </div>
+          <span class="compare-summary-value">38 → 4 <small>样式引用</small></span>
+          <p>页面结构和样式链路更清楚，首屏关键样式也已经拆出来处理，减少了不必要的阻塞。</p>
+        </article>
+
+        <article class="compare-summary-card">
+          <div class="compare-summary-top">
+            <h2>图片策略</h2>
+            <span class="compare-chip compare-chip-after">更统一</span>
+          </div>
+          <span class="compare-summary-value">206 / 232 → 81 / 81 <small>lazy</small></span>
+          <p>重构版图片懒加载和异步解码策略已经统一，页面滚动加载行为更稳定，也更容易继续压缩 CLS。</p>
+        </article>
+
+        <article class="compare-summary-card">
+          <div class="compare-summary-top">
+            <h2>轮播初始化</h2>
+            <span class="compare-chip compare-chip-after">按需加载</span>
+          </div>
+          <span class="compare-summary-value">17 → 11 <small>Swiper</small></span>
+          <p>不仅数量更少，首屏以下还改成按可视区域附近再初始化，避免一进入页面就把所有轮播同时跑起来。</p>
+        </article>
+      </section>
+
+      <section class="compare-grid-2">
+        <article class="compare-score-card">
+          <h2>建议补充的实测分数</h2>
+          <p>这部分适合后续把 Lighthouse 或真实 Web Vitals 数据补进来。现在先保留汇报结构，避免把“代码层明确改善”和“线上实测结果”混在一起。</p>
+          <div class="compare-score-row">
+            <div class="compare-score-item">
+              <div class="compare-score-label">
+                <span>Performance</span>
+                <span class="compare-score-status">待实测</span>
+              </div>
+              <div class="compare-score-value">-- <span class="compare-score-value-muted">可填写 Before / After 分数</span></div>
+            </div>
+            <div class="compare-score-item">
+              <div class="compare-score-label">
+                <span>SEO</span>
+                <span class="compare-score-status">待实测</span>
+              </div>
+              <div class="compare-score-value">-- <span class="compare-score-value-muted">建议补线上 Lighthouse</span></div>
+            </div>
+            <div class="compare-score-item">
+              <div class="compare-score-label">
+                <span>Accessibility</span>
+                <span class="compare-score-status">待实测</span>
+              </div>
+              <div class="compare-score-value">-- <span class="compare-score-value-muted">可补读屏和键盘走查</span></div>
+            </div>
+            <div class="compare-score-item">
+              <div class="compare-score-label">
+                <span>Best Practices</span>
+                <span class="compare-score-status">待实测</span>
+              </div>
+              <div class="compare-score-value">-- <span class="compare-score-value-muted">建议补生产环境分数</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="compare-score-card">
+          <h2>这页最适合怎么用</h2>
+          <p>如果你要对外说明，本页建议重点讲“代码结构更轻、首屏加载更稳、SEO 基础不被破坏、后续更容易维护”。这样比只说“改了几个样式”更容易让人理解重构价值。</p>
+          <div class="compare-score-row">
+            <div class="compare-score-item">
+              <div class="compare-score-label">
+                <span>适合汇报的对象</span>
+                <span class="compare-score-status">已整理</span>
+              </div>
+              <div class="compare-score-value">甲方 / 产品 / 运营 / 开发</div>
+            </div>
+            <div class="compare-score-item">
+              <div class="compare-score-label">
+                <span>建议重点话术</span>
+                <span class="compare-score-status">通俗版本</span>
+              </div>
+              <div class="compare-score-value">更快出来，更少跳动，更稳，更好维护</div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="compare-section">
+        <div class="compare-section-title">
+          <div>
+            <h2>一眼能看懂的对比数据</h2>
+            <p>这里放的是当前本地基线下，已经能明确确认的页面层对比数据。</p>
+          </div>
+        </div>
+
+        <div class="compare-metric-table">
+          <table>
+            <thead>
+              <tr>
+                <th>对比项</th>
+                <th>重构前</th>
+                <th>重构后</th>
+                <th>说明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="compare-col-title">Script 数量</td>
+                <td class="compare-col-before">114</td>
+                <td class="compare-col-after">2 <div class="compare-highlight">展示层逻辑更集中</div>
+                </td>
+                <td>说明重构页已经把首页自身展示逻辑收得更干净，后续更容易排查和持续优化。</td>
+              </tr>
+              <tr>
+                <td class="compare-col-title">样式表引用</td>
+                <td class="compare-col-before">38</td>
+                <td class="compare-col-after">4 <div class="compare-highlight">样式链路更清晰</div>
+                </td>
+                <td>首屏关键样式已内联，完整样式改为非阻塞加载，减少首屏等待。</td>
+              </tr>
+              <tr>
+                <td class="compare-col-title">图片数量</td>
+                <td class="compare-col-before">232</td>
+                <td class="compare-col-after">81</td>
+                <td>这里反映的是当前本地页面层资源体量，便于说明重构页结构更聚焦。</td>
+              </tr>
+              <tr>
+                <td class="compare-col-title">Swiper 初始化</td>
+                <td class="compare-col-before">17</td>
+                <td class="compare-col-after">11 <div class="compare-highlight">并且支持延迟初始化</div>
+                </td>
+                <td>首屏以下多个轮播已改为按可视区域附近再初始化，降低首次进入页面的压力。</td>
+              </tr>
+              <tr>
+                <td class="compare-col-title">图片懒加载覆盖</td>
+                <td class="compare-col-before">206 / 232</td>
+                <td class="compare-col-after">81 / 81 <div class="compare-highlight">策略完全统一</div>
+                </td>
+                <td>重构后图片统一显式使用 `loading="lazy"`，行为更可预测。</td>
+              </tr>
+              <tr>
+                <td class="compare-col-title">异步解码覆盖</td>
+                <td class="compare-col-before">未统一</td>
+                <td class="compare-col-after">81 / 81 <div class="compare-highlight">滚动更稳</div>
+                </td>
+                <td>所有图片统一显式使用 `decoding="async"`，降低同步解码带来的阻塞风险。</td>
+              </tr>
+              <tr>
+                <td class="compare-col-title">图片 alt 规范度</td>
+                <td class="compare-col-before">228 张带 alt，42 张为空</td>
+                <td class="compare-col-after">81 张全部显式带 alt <div class="compare-highlight">只保留装饰图空 alt</div>
+                </td>
+                <td>SEO 和无障碍语义更规整，后续维护也更不容易漏掉。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="compare-grid-3">
+        <article class="compare-section">
+          <h2>性能优化对比</h2>
+          <ul class="compare-list">
+            <li>
+              <strong>重构前：首屏以下模块更容易一次性初始化</strong>
+              <span>线上页带有较多平台脚本、营销脚本和轮播逻辑，首页自身展示层较难单独控重。</span>
+            </li>
+            <li>
+              <strong>重构后：首屏以下多个 Swiper 已改成按需初始化</strong>
+              <span>页面先优先处理用户第一眼看到的内容，再延后处理更下面的轮播，首屏更轻。</span>
+            </li>
+            <li>
+              <strong>额外收益：首屏媒体策略更稳</strong>
+              <span>顶部 Banner 视频做了按设备、按当前可见项加载和播放，首个图片也提高了加载优先级。</span>
+            </li>
+          </ul>
+        </article>
+
+        <article class="compare-section">
+          <h2>SEO 影响对比</h2>
+          <ul class="compare-list">
+            <li>
+              <strong>重构前：SEO 基础能力主要来自 Shopify 主题壳</strong>
+              <span>`title`、`meta description`、`canonical`、`hreflang`、OG 等能力本身已经在线上主题层存在。</span>
+            </li>
+            <li>
+              <strong>重构后：没有破坏 Shopify 原有 SEO 输出链路</strong>
+              <span>这次重构没有在展示层重复造一套 SEO 壳，避免局部模板反而把全站 SEO 逻辑弄乱。</span>
+            </li>
+            <li>
+              <strong>额外收益：语义和图片说明更规整</strong>
+              <span>图片 alt、链接命名和内容结构更清晰，对 SEO 和内容维护都是正向帮助。</span>
+            </li>
+          </ul>
+        </article>
+
+        <article class="compare-section">
+          <h2>可访问性与稳定性</h2>
+          <ul class="compare-list">
+            <li>
+              <strong>重构前：通用链接和轮播控件语义较弱</strong>
+              <span>像 `Learn more`、`View all` 这类链接，对读屏器和自动审计工具不够友好。</span>
+            </li>
+            <li>
+              <strong>重构后：补了 aria-label、按钮语义和键盘操作</strong>
+              <span>首页轮播箭头现在支持 `Enter` / `Space`，并同步 `aria-disabled` 和 `tabindex`。</span>
+            </li>
+            <li>
+              <strong>额外收益：布局稳定性更强</strong>
+              <span>补了一批低风险图片尺寸，修了 `swiper-prohibit-select` 初始化高度异常，页面更少跳动。</span>
+            </li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="compare-grid-2">
+        <article class="compare-section">
+          <h2>对甲方最容易理解的价值</h2>
+          <ul class="compare-list">
+            <li>
+              <strong>页面更快进入可读状态</strong>
+              <span>重点资源会更早出现，不再一上来就让所有模块同时抢资源。</span>
+            </li>
+            <li>
+              <strong>页面更少抖动、更少错位</strong>
+              <span>图片占位、轮播初始化和视频封面都做了补强，移动端体感会更稳。</span>
+            </li>
+            <li>
+              <strong>不是一次性页面，而是更适合长期运营的模板基础</strong>
+              <span>后续换活动、换素材、继续做 section 化，维护成本会明显更低。</span>
+            </li>
+          </ul>
+        </article>
+
+        <article class="compare-section">
+          <h2>建议下一步怎么补强这页</h2>
+          <ul class="compare-list">
+            <li>
+              <strong>补 Lighthouse Before / After 分数</strong>
+              <span>把 Performance、SEO、Accessibility、Best Practices 的分数补进上面的卡片里，汇报会更完整。</span>
+            </li>
+            <li>
+              <strong>补 Web Vitals 实测</strong>
+              <span>如果能拿到真实环境的 LCP、CLS、INP，这页会从“结构优化说明”升级成“结果导向汇报页”。</span>
+            </li>
+            <li>
+              <strong>补第三方脚本审计结果</strong>
+              <span>线上真实性能最大的变量仍然在 Shopify 外层壳和第三方 App，后面补这一块会更有说服力。</span>
+            </li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="compare-note">
+        <h2><span class="compare-note-dot" aria-hidden="true"></span>说明边界</h2>
+        <p>这页里的“脚本数量、样式引用、图片策略、Swiper 初始化”等，是当前本地对照下已经可以明确确认的页面层数据。</p>
+        <p>像 Lighthouse 分数、真实 LCP / CLS、线上第三方脚本影响，这些仍建议在生产或准生产环境单独实测后再补上。这样对外表达会更稳，也更不容易被误解成“本地结构优化 = 线上最终分数”。</p>
+      </section>
+    </div>
+  </main>
+</body>
+
+</html>

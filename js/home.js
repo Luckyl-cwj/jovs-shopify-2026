@@ -81,6 +81,8 @@ var swiperAwardsLogo = null;
 var awardsLogoSection = document.querySelector("#section-awards-logo-list");
 var prohibitSelectSection = document.querySelector("#section-prohibit-select");
 var shopByConcernSection = document.querySelector("#section-shop-by-concern");
+var swiperShopByConcernElement = document.querySelector(".swiper-shop-by-concern");
+var swiperShopByConcernMediaQuery = window.matchMedia("(max-width: 992px)");
 var userEvaluationSection = document.querySelector("#section-user-evaluation");
 var trustedRecommendedSection = document.querySelector("#section-trusted-recommended");
 var ourMissionSection = document.querySelector("#section-our-mission");
@@ -95,6 +97,7 @@ var swiperOurMission = null;
 var swiperAddBlog = null;
 var awardsLogoManagerInitialized = false;
 var addTextCardManagerInitialized = false;
+var shopByConcernManagerInitialized = false;
 var prohibitSelectNavigationBound = false;
 var halfCardShowSection = document.querySelector("#section-half-card-show");
 var halfCardShowItems = halfCardShowSection
@@ -631,29 +634,65 @@ function initProhibitSelectSwipers() {
   }
 }
 
-function initShopByConcernSwiper() {
-  if (!shopByConcernSection || swiperShopByConcern) {
+function toggleShopByConcernSwiper() {
+  if (!shopByConcernSection || !swiperShopByConcernElement) {
     return;
   }
 
-  swiperShopByConcern = new Swiper(".swiper-shop-by-concern", {
-    spaceBetween: 12,
-    slidesPerView: "auto",
-    navigation: {
-      nextEl: swiperShopByConcernNextButton,
-      prevEl: swiperShopByConcernPrevButton,
-    },
-    on: {
-      init: function (swiper) {
-        updateShopByConcernProgress(swiper);
-      },
-      slideChange: function (swiper) {
-        updateShopByConcernProgress(swiper);
-      },
-      resize: function (swiper) {
-        updateShopByConcernProgress(swiper);
-      },
-    },
+  if (!swiperShopByConcernMediaQuery.matches) {
+    if (!swiperShopByConcern) {
+      swiperShopByConcern = new Swiper(".swiper-shop-by-concern", {
+        spaceBetween: 12,
+        slidesPerView: "auto",
+        navigation: {
+          nextEl: swiperShopByConcernNextButton,
+          prevEl: swiperShopByConcernPrevButton,
+        },
+        on: {
+          init: function (swiper) {
+            updateShopByConcernProgress(swiper);
+          },
+          slideChange: function (swiper) {
+            updateShopByConcernProgress(swiper);
+          },
+          resize: function (swiper) {
+            updateShopByConcernProgress(swiper);
+          },
+        },
+      });
+    } else {
+      swiperShopByConcern.update();
+      updateShopByConcernProgress(swiperShopByConcern);
+    }
+
+    return;
+  }
+
+  if (swiperShopByConcern) {
+    swiperShopByConcern.destroy(true, true);
+    swiperShopByConcern = null;
+  }
+}
+
+function initShopByConcernSwiper() {
+  if (shopByConcernManagerInitialized) {
+    return;
+  }
+
+  shopByConcernManagerInitialized = true;
+  toggleShopByConcernSwiper();
+  bindMediaQueryChange(swiperShopByConcernMediaQuery, function () {
+    toggleShopByConcernSwiper();
+
+    if (!swiperShopByConcernProgressFill) {
+      return;
+    }
+
+    if (swiperShopByConcernMediaQuery.matches) {
+      swiperShopByConcernProgressFill.style.width = "";
+    } else if (swiperShopByConcern) {
+      updateShopByConcernProgress(swiperShopByConcern);
+    }
   });
 }
 
