@@ -306,6 +306,8 @@ h2 {
 
   .item {
     min-width: 0;
+    max-width: 201px;
+    
     .tit {
       display: -webkit-box;
       font-size: 16px;

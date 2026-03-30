@@ -287,6 +287,7 @@ h2 {
 }
 #section-show-products .item {
   min-width: 0;
+  max-width: 201px;
 }
 #section-show-products .item .tit {
   display: -webkit-box;
